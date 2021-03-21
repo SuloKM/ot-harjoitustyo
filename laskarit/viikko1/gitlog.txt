@@ -107,4 +107,4 @@ Date:   Fri Mar 19 18:01:11 2021 +0200
 aleksikoivisto@Aleksis-MacBook-Air tiedostoja %                     
 
 
-
+epäsynkroonin testi
