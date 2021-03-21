@@ -4,7 +4,6 @@
 
 ### Viikko 1
 
-gitlog.txt
-[GitHub](https://github.com/SuloKM/ot-harjoitustyo/tree/master/laskarit/viikko1/gitlog.txt)
+[gitlog.txt](https://github.com/SuloKM/ot-harjoitustyo/tree/master/laskarit/viikko1/gitlog.txt)
 
-komentorivi.txt
+[komentorivi.txt](https://github.com/SuloKM/ot-harjoitustyo/tree/master/laskarit/viikko1/komentorivi.txt)
