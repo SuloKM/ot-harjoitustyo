@@ -9,3 +9,5 @@
 [komentorivi.txt](https://github.com/SuloKM/ot-harjoitustyo/tree/master/laskarit/viikko1/komentorivi.txt)
 
 lisäys
+
+lisäys2
