@@ -1,0 +1,110 @@
+aleksikoivisto@Aleksis-MacBook-Air tiedostoja % git log --stat | cat
+commit 73c1998eb6dae4df721b83b7cfaf8f1ef790bf92
+Author: Aleksi <aleksijkoivisto@gmail.com>
+Date:   Fri Mar 19 21:55:08 2021 +0200
+
+    22
+
+ tiedostoja/file3 | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 5dd5072eaf2473777bd914df9f8fbef0970d39ba
+Author: Aleksi <aleksijkoivisto@gmail.com>
+Date:   Fri Mar 19 21:49:06 2021 +0200
+
+    file
+
+ tiedostoja/file1 | 2 ++
+ tiedostoja/file2 | 1 +
+ tiedostoja/file3 | 2 ++
+ 3 files changed, 5 insertions(+)
+
+commit 9f9808764f11aa59bfad2c9c5a7a3269894cf15a
+Author: Aleksi <aleksijkoivisto@gmail.com>
+Date:   Fri Mar 19 21:36:37 2021 +0200
+
+    patch
+
+ eka.txt    | 2 +-
+ kolmas.txt | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+commit 8e620a7827230cc1232469adec90537d793ec1df
+Author: Aleksi <aleksijkoivisto@gmail.com>
+Date:   Fri Mar 19 21:32:12 2021 +0200
+
+    uudelleennimentä
+
+ tiedosto.txt => eka.txt | 0
+ toinen.txt              | 1 -
+ 2 files changed, 1 deletion(-)
+
+commit f8231779c89e3eba7aad23c86a5ac2cc67977e62
+Author: Aleksi <aleksijkoivisto@gmail.com>
+Date:   Fri Mar 19 21:27:05 2021 +0200
+
+    tiedosto muutos 3
+
+ tiedosto.txt | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+commit 2e7ad5fccac5f176fa6c45966a320c84c893a4b2
+Author: Aleksi <aleksijkoivisto@gmail.com>
+Date:   Fri Mar 19 21:25:30 2021 +0200
+
+    tiedosto muutos 2
+
+ tiedosto.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit 83f3a349d2a64aad35d86f17ab894434d31a255a
+Author: Aleksi <aleksijkoivisto@gmail.com>
+Date:   Fri Mar 19 21:19:04 2021 +0200
+
+    tiedosto muutos
+
+ tiedosto.txt | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+commit 77edaa221cad45975513af72fdf3b45dbb01ea3f
+Author: Aleksi <aleksijkoivisto@gmail.com>
+Date:   Fri Mar 19 18:15:08 2021 +0200
+
+    stuff
+
+ kolmas.txt      | 2 +-
+ stuff/stuff.txt | 1 +
+ toinen.txt      | 2 +-
+ 3 files changed, 3 insertions(+), 2 deletions(-)
+
+commit 590fce2e24bf43aaad931896bcd4eaa5be24e488
+Author: Aleksi <aleksijkoivisto@gmail.com>
+Date:   Fri Mar 19 18:11:20 2021 +0200
+
+    kolmas
+
+ kolmas.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+commit 8aa78a647c681fbdc722186cf55015d4b4e5ec6b
+Author: Aleksi <aleksijkoivisto@gmail.com>
+Date:   Fri Mar 19 18:07:21 2021 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 91471e710b0a89fc81ba0d2bfe5a7f7fc88742dd
+Author: Aleksi <aleksijkoivisto@gmail.com>
+Date:   Fri Mar 19 18:01:11 2021 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+aleksikoivisto@Aleksis-MacBook-Air tiedostoja %                     
+
+
+
