@@ -11,3 +11,10 @@
 lisäys
 
 lisäys2
+
+### Viikko 2
+
+[vaatimusmaarittely.md](https://github.com/SuloKM/ot-harjoitustyo/dokumentaatio/vaatimusmaarittely.md)
+
+[tuntikirjanpito.md](https://github.com/SuloKM/ot-harjoitustyo/dokumentaatio/tuntikirjanpito.md)
+
