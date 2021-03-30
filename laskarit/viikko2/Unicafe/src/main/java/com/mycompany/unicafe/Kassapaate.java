@@ -71,4 +71,11 @@ public class Kassapaate {
     public int edullisiaLounaitaMyyty() {
         return edulliset;
     }
+    
+    /*
+    @Override
+    public String toString() {
+        return "Kassassa on rahaa " + this.kassassaRahaa + " euroa";
+    }
+    */
 }
