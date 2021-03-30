@@ -14,7 +14,7 @@ lisäys2
 
 ### Viikko 2
 
-[vaatimusmaarittely.md](https://github.com/SuloKM/ot-harjoitustyo/dokumentaatio/vaatimusmaarittely.md)
+[vaatimusmaarittely.md](https://github.com/SuloKM/ot-harjoitustyo/tree/master/dokumentaatio/vaatimusmaarittely.md)
 
-[tuntikirjanpito.md](https://github.com/SuloKM/ot-harjoitustyo/dokumentaatio/tuntikirjanpito.md)
+[tuntikirjanpito.md](https://github.com/SuloKM/ot-harjoitustyo/tree/master/dokumentaatio/tuntikirjanpito.md)
 
