@@ -6,7 +6,7 @@
 |  5.4. | 3    | Swing-kertaus |
 |  6.4. | 3    | JavaFX-kertaus |
 |  9.4. | 3    | Käyttöliittymää |
-| 10.4. | 3    | Sovellusgiikkaa |
-| 12.4. | 3    | Sovellusgiikkaa |
+| 10.4. | 3    | Sovelluslogiikkaa |
+| 12.4. | 3    | Sovelluslogiikkaa |
 | 13.4. | 3    | JUnit |
 
