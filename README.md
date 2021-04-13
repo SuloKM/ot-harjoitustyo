@@ -1,5 +1,7 @@
 #  Musakatalogi
 
+Sovelluksella on tarkoitus pystyä ylläpitämään henkilökohtaista musiikkikokoelmaa.
+
 ## Dokumentaatio
 
 [vaatimusmaarittely.md](https://github.com/SuloKM/ot-harjoitustyo/tree/master/dokumentaatio/vaatimusmaarittely.md)
