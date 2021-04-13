@@ -72,21 +72,22 @@
                     <mainClass>katalogi.Main</mainClass>
                 </configuration>
                 <executions>
+                    <!--
                     <execution>
-                        <!-- Default configuration for running -->
-                        <!-- Usage: mvn clean javafx:run -->
+                        <!- Default configuration for running -->
+                        <!-- Usage: mvn clean javafx:run ->
                         <id>default-cli</id>
                     </execution>
                     <execution>
-                        <!-- Configuration for manual attach debugging -->
-                        <!-- Usage: mvn clean javafx:run@debug -->
+                        <!- Configuration for manual attach debugging ->
+                        <!- Usage: mvn clean javafx:run@debug ->
                         <id>debug</id>
                         <configuration>
                             <options>
                                 <option>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=localhost:8000</option>
                             </options>
                         </configuration>
-                    </execution>
+                    </execution> -->
                     <execution>
                         <!-- Configuration for automatic IDE debugging -->
                         <id>ide-debug</id>
