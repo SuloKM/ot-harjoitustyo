@@ -9,4 +9,7 @@
 | 10.4. | 3    | Sovelluslogiikkaa |
 | 12.4. | 3    | Sovelluslogiikkaa |
 | 13.4. | 3    | JUnit |
-
+| 17.4. | 4    | Sovelluslogiikkaa |
+| 19.4. | 6    | Käyttöliittymää |
+| 20.4. | 6    | Koodin parantelua, dokumentaatiota |
+| yht   | 41   |
