@@ -28,13 +28,9 @@ public class KatalogiDao {
     
     public KatalogiDao(String file) throws Exception {
 
-            //System.out.println(" KatalogiDao ");
-        
         this.tiedostonNimi = file;
 
         tiedosto = new File(tiedostonNimi);
-        
-            //System.out.println(" tiedosto "+tiedosto);
 
         levyt = new ArrayList<>();
         
@@ -43,46 +39,121 @@ public class KatalogiDao {
             Scanner reader = new Scanner(tiedosto);
             
             while (reader.hasNextLine()) {
-                
-                    //System.out.println(" reader.hasNextLine ");
-                
-                String[] parts = reader.nextLine().split(";");
-                
-                for (int i=0; i<parts.length;i++) {
-                    
-                    //System.out.println(" parts "+i+ ": "+parts[i]);
-                }
 
-                Levy levy = new Levy(parts[0],parts[1],parts[2],parts[3],parts[4]);
-                
-                    //System.out.println(" levy "+levy);
-                    
+                String[] parts = reader.nextLine().split(";");
+
+                Levy levy = new Levy(parts[0], parts[1], parts[2], parts[3], parts[4]);
+
                 levyt.add(levy);
-                
-                    //System.out.println(" levyt haettu ");
+
             }
             
             //boolean poistettu = tiedosto.delete();
             //    System.out.println(" tiedosto poistettu "+poistettu);
-        }   
-        catch (Exception e) {
+        } catch (Exception e) {
             writer = new FileWriter(tiedosto);
             writer.close();
         }
+    }
+    
+    public ArrayList<Levy> poista(Levy poistettava) {
+
+        for (int i = 0; i < levyt.size(); i++) {
+
+            if (levyt.get(i).onkoSama(poistettava)) {
+                
+                levyt.remove(i);
+                break;
+            }
+        }
+        
+        return (ArrayList) levyt;
+    }
+    
+    public ArrayList<Levy> hae(String param1, String param2) {
+
+        if (param1.equals("")) {
+
+            return (ArrayList) levyt;
+        } else {
+            
+            ArrayList<Levy> haetut = new ArrayList<Levy>();
+            
+            for (int i = 0; i < levyt.size(); i++) {
+                
+                if (param1.equals("Esittaja")) {
+                    
+                    if (levyt.get(i).getEsittaja().equals(param2)) {
+                        haetut.add(levyt.get(i));
+                    }
+                    
+                } else if (param1.equals("Nimi")) {
+                    
+                    if (levyt.get(i).getNimi().equals(param2)) {
+                        haetut.add(levyt.get(i));
+                    }
+                } else if (param1.equals("Vuosi")) {
+                    
+                    if (levyt.get(i).getVuosi().equals(param2)) {
+                        haetut.add(levyt.get(i));
+                    }
+                } else if (param1.equals("Tyylilaji")) {
+                    
+                    if (levyt.get(i).getTyylilaji().equals(param2)) {
+                        haetut.add(levyt.get(i));
+                    }   
+                } else if (param1.equals("Omistaja")) {
+
+                    if (levyt.get(i).getOmistaja().equals(param2)) {
+                        haetut.add(levyt.get(i));
+                    }
+                }
+            }
+            
+            return haetut;
+        }
+    }
+    
+    public boolean tallennaTiedostoon() throws IOException {
+        
+            //System.out.println("tallennaTiedostoon levyt " + levyt);
+        
+        String rivi = "";
+        boolean ok = true;
+        
+        if (writer == null) {
+            
+            writer = new FileWriter(tiedosto); 
+        }
+        
+        for (int i = 0; i < levyt.size(); i++) {
+            
+            Levy levy = levyt.get(i);
+            
+            rivi = levy.getEsittaja() + ";" + levy.getNimi()
+                    + ";" + levy.getVuosi() + ";" + levy.getTyylilaji() + ";" + levy.getOmistaja();
+            
+            try {
+
+                writer.write(rivi + "\n");
+
+            } catch (IOException ex) {
+
+                Logger.getLogger(KatalogiDao.class.getName()).log(Level.SEVERE, null, ex);
+                ok = false;
+            }
+        }
+        
+        return ok;
     }
     
     public int lisaa(Levy levy) throws IOException {
 
         int koodi = 0;
                 
-            //System.out.println(" KatalogiDao ");
-            //System.out.println(" levy "+levy);
-
-        
+            //System.out.println(" KatalogiDao lisaa levy "+levy);
             
         koodi = tarkistaLevy(levy);
-
-            //System.out.println(" koodi "+koodi);
 
         if (koodi < 2) {
             
@@ -90,17 +161,15 @@ public class KatalogiDao {
             
             writer = new FileWriter(this.tiedosto);
             
-            for (int i=0; i < levyt.size(); i++) {
+            for (int i = 0; i < levyt.size(); i++) {
                 
                 levy = levyt.get(i);
-                String rivi = levy.getEsittaja()+";"+levy.getNimi()
-                    +";"+levy.getVuosi()+";"+levy.getTyylilaji()+";"+levy.getOmistaja();
-                
-                //System.out.println(" levy "+levy);
+                String rivi = levy.getEsittaja() + ";" + levy.getNimi()
+                    + ";" + levy.getVuosi() + ";" + levy.getTyylilaji() + ";" + levy.getOmistaja();
 
                 try {
 
-                    writer.write(rivi+"\n");
+                    writer.write(rivi + "\n");
 
                 } catch (IOException ex) {
 
@@ -111,17 +180,14 @@ public class KatalogiDao {
             
             writer.close();
         }
-        
-        return koodi;
 
+        return koodi;
     }
     
     private int tarkistaLevy(Levy levy) {
         
         int koodi = 0;
 
-            //System.out.println(" tarkistaLevy "+levy);
-        
         if (levy.getEsittaja().equals("") | levy.getNimi().equals("") |
                 levy.getVuosi().equals("") | levy.getTyylilaji().equals("") |
                 levy.getOmistaja().equals("")) 
@@ -142,24 +208,12 @@ public class KatalogiDao {
             for (int i=0; i < levyt.size(); i++) {
                 Levy vrt = levyt.get(i);
 
-                    //System.out.println(" vrt "+vrt);
-
-                if (levy.getEsittaja().equals(vrt.getEsittaja())) {
-                    if (levy.getNimi().equals(vrt.getNimi())) {
-                        if (levy.getVuosi().equals(vrt.getVuosi())) {
-                            if (levy.getTyylilaji().equals(vrt.getTyylilaji())) {
-                                if (levy.getOmistaja().equals(vrt.getOmistaja())) {
-                                    koodi = 2;
-                                }
-                            }
-                        }
-                    }
+                if (vrt.onkoSama(levyt.get(i))) {
+                    koodi = 2;
                 }
             }
         }
-        
-            //System.out.println(" koodi "+koodi);
-        
+
         return koodi;
     }
 }

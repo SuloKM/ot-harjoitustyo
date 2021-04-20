@@ -16,6 +16,7 @@ public class Levy {
     private String vuosi;
     private String tyylilaji;
     private String omistaja;
+    private boolean poista;
 
     public Levy() {
     }
@@ -67,6 +68,39 @@ public class Levy {
 
     public void setOmistaja(String omistaja) {
         this.omistaja = omistaja;
+    }
+    
+    public boolean isPoista() {
+        return poista;
+    }
+
+    public void setPoista(boolean poista) {
+        this.poista = poista;
+    }
+    
+    public boolean onkoSama(Levy param) {
+        
+        if (!this.esittaja.equals(param.getEsittaja())) {
+            return false;
+        }
+        
+        if (!this.nimi.equals(param.getNimi())) {
+            return false;
+        }
+        
+        if (!this.vuosi.equals(param.getVuosi())) {
+            return false;
+        }
+        
+        if (!this.tyylilaji.equals(param.getTyylilaji())) {
+            return false;
+        }
+        
+        if (!this.omistaja.equals(param.getOmistaja())) {
+            return false;
+        }
+        
+        return true;
     }
 
     @Override
