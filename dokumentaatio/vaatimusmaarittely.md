@@ -5,16 +5,16 @@ Sovellus mahdollistaa musiikkikokoelman hallinnan. Sillä voi lisätä, hakea ja
 Sovelluksella on alkuvaiheessa vain yksi (perustason) käyttäjärooli. Sovellusta voi tosin käyttää useampikin perustuen uuden levyn tietojen mukana talletettavaan "omistaja" -attribuuttiin.
 ## Perusversion tarjoama toiminnallisuus
 ### Levyjen hallinta (alkunäyttö)
-* käyttäjä voi syöttää järjestelmään uuden levyn tiedot
-* käyttäjä voi hakea levyjen tietoja tietyillä kriteereillä
-* käyttäjä voi tutkia aiemmin tallennetun levykokoelman tilastoja
-* muista näkymistä pääsee palaamaan takaisin alkunäytölle
+* käyttäjä voi syöttää järjestelmään uuden levyn tiedot [x]
+* käyttäjä voi hakea levyjen tietoja tietyillä kriteereillä [x]
+* käyttäjä voi tutkia aiemmin tallennetun levykokoelman tilastoja []
+* muista näkymistä pääsee palaamaan takaisin alkunäytölle [x]
 ### Uuden levyn rekisteröinti
-* levystä tallennetaan Esittäjä, Nimi, Vuosi, Tyylilaji (Genre)  ja Omistaja
-* jos samalle omistajalle on jo tallennettu lisättävä levy, annetaan ilmoitus eikä levyä lisätä
+* levystä tallennetaan Esittäjä, Nimi, Vuosi, Tyylilaji (Genre) ja Omistaja [x]
+* jos samalle omistajalle on jo tallennettu lisättävä levy, annetaan ilmoitus eikä levyä lisätä [x]
 ### Levyjen haku
-* levyjen tietoja voi hakea valitulla kriteerillä eli levyn attribuutilla
-* levyt listataan ja levyjen attribuutit näytetään omissa sarakkeissaan
+* levyjen tietoja voi hakea valitulla kriteerillä eli levyn attribuutilla [x]
+* levyt listataan ja levyjen attribuutit näytetään omissa sarakkeissaan [x]
 * kunkin rivin kohdalla on erillinen valintaruutu jolla kyseisen levyn voi merkitä poistettavaksi
 * oikeanpuoleinen sarakeotsikko toimii poistopainikkeena, jonka aktivoinnin myötä poistettavaksi merkityt levyt poistetaan listalta
 ### Tilastointi
