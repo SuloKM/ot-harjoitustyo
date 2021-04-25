@@ -12,6 +12,14 @@ Sovelluksella on tarkoitus pystyä ylläpitämään henkilökohtaista musiikkiko
 
 ## Komentorivitoiminnot
 
+### Ohjelman käyttöönotto
+
+Projektikansio ladataan koneelle ja sijoitetaan haluttuun hakemistoon. Musakatalogi-hakemistossa (sisältää pom.xml-tiedoston) suoritetaan komento
+
+```
+mvn compile exec:java -Dexec.mainClass=katalogi.Main
+```
+
 ### Testaus
 
 Testit suoritetaan komennolla
