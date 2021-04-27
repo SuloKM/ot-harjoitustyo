@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -54,6 +55,74 @@ public class KatalogiDao {
             writer = new FileWriter(tiedosto);
             writer.close();
         }
+    }
+    
+    public HashMap tilastoi() {
+    //public void tilastoi() {
+        
+            //System.out.println(" tilastoi ");
+        HashMap tilasto = new HashMap();
+        
+        //levyt.stream()
+        
+        ArrayList attribuutti = new ArrayList();
+        
+        for (int i = 0; i < levyt.size(); i++) {
+            
+                //System.out.println(" getEsittaja "+levyt.get(i).getEsittaja());
+            attribuutti.add(levyt.get(i).getEsittaja());
+        }
+        
+            //System.out.println(" distinct "+attribuutti.stream().distinct().count());
+        
+        tilasto.put("Esittäjiä", "" + attribuutti.stream().distinct().count());
+        attribuutti.clear();
+            
+        for (int i = 0; i < levyt.size(); i++) {
+            
+                //System.out.println(" getNimi "+levyt.get(i).getNimi());
+            attribuutti.add(levyt.get(i).getNimi());
+        }
+        
+            //System.out.println(" distinct "+attribuutti.stream().distinct().count());
+            
+        tilasto.put("Nimiä", "" + attribuutti.stream().distinct().count());
+        attribuutti.clear();
+        
+        for (int i = 0; i < levyt.size(); i++) {
+            
+                //System.out.println(" getVuosi "+levyt.get(i).getVuosi());
+            attribuutti.add(levyt.get(i).getVuosi());
+        }
+        
+            //System.out.println(" distinct "+attribuutti.stream().distinct().count());
+        
+        tilasto.put("Vuosia", "" + attribuutti.stream().distinct().count());
+        attribuutti.clear();
+        
+        for (int i = 0; i < levyt.size(); i++) {
+            
+                //System.out.println(" getTyylilaji "+levyt.get(i).getTyylilaji());
+            attribuutti.add(levyt.get(i).getTyylilaji());
+        }
+        
+            //System.out.println(" distinct "+attribuutti.stream().distinct().count());
+        
+        tilasto.put("Tyylilajeja", "" + attribuutti.stream().distinct().count());
+        attribuutti.clear();
+        
+        for (int i = 0; i < levyt.size(); i++) {
+            
+                //System.out.println(" getOmistaja "+levyt.get(i).getOmistaja());
+            attribuutti.add(levyt.get(i).getOmistaja());
+        }
+        
+            //System.out.println(" distinct "+attribuutti.stream().distinct().count());
+        
+        tilasto.put("Omistajia", "" + attribuutti.stream().distinct().count());
+        attribuutti.clear();
+        
+        return tilasto;
     }
     
     public ArrayList<Levy> poista(Levy poistettava) {
@@ -186,12 +255,13 @@ public class KatalogiDao {
     
     private int tarkistaLevy(Levy levy) {
         
+            //System.out.println(" tarkistaLevy ");
+        
         int koodi = 0;
 
         if (levy.getEsittaja().equals("") | levy.getNimi().equals("") |
                 levy.getVuosi().equals("") | levy.getTyylilaji().equals("") |
-                levy.getOmistaja().equals("")) 
-        {
+                levy.getOmistaja().equals("")) {
             // ilmo.setText("Puutteellinen syöte.");
             koodi = 3;
         } else {
@@ -203,14 +273,21 @@ public class KatalogiDao {
                 koodi = 4;
             }
         }
+        
+            //System.out.println(" tarkistaLevy2 ");
 
         if (koodi == 0) {
-            for (int i=0; i < levyt.size(); i++) {
+            for (int i = 0; i < levyt.size(); i++) {
                 Levy vrt = levyt.get(i);
 
-                if (vrt.onkoSama(levyt.get(i))) {
+                    //System.out.println(" vrt "+vrt);
+                    //System.out.println(" levy "+levy);
+                
+                if (vrt.onkoSama(levy)) {
                     koodi = 2;
                 }
+                
+                    //System.out.println(" koodi "+koodi);
             }
         }
 

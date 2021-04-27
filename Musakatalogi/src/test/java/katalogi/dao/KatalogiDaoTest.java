@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import katalogi.domain.Levy;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
@@ -33,11 +34,11 @@ public class KatalogiDaoTest {
     @Before
     public void setUp() throws Exception {
         
-            System.out.println(" setUp.. ");
+            //System.out.println(" setUp.. ");
         
         file = testFolder.newFile("testi_levyt.txt");
         
-            System.out.println(" file.getAbsolutePath "+file.getAbsolutePath());
+            //System.out.println(" file.getAbsolutePath "+file.getAbsolutePath());
 
         try (FileWriter fw = new FileWriter(file.getAbsolutePath())) {
             fw.write("");
@@ -50,58 +51,80 @@ public class KatalogiDaoTest {
         // dao = new KatalogiDao("testi_levyt.txt");
         dao = new KatalogiDao(file.getAbsolutePath());
         
-            System.out.println(" ..setUp ");
+            //System.out.println(" ..setUp ");
+    }
+    
+    @Test
+    public void showStatistics() throws IOException {
+        
+        HashMap map = dao.tilastoi();
+            //System.out.println(" map.size "+map.size());
+        assertEquals(5, map.size());
     }
 
-    /*
     @Test
     public void savingRecordSuccessfull() throws IOException {
         
-            System.out.println(" levynTallennus ");
+            //System.out.println(" levynTallennus ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji","Omistaja1");
         int koodi = dao.lisaa(levy);
-            System.out.println(" koodi "+koodi);
+        assertEquals(0, koodi);
+        
+            //System.out.println(" koodi "+koodi);
     }
     
     @Test
     public void savingSameRecordUnsuccessfull() throws IOException {
         
-            System.out.println(" samanLevynTallennus ");
+            //System.out.println(" samanLevynTallennus ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji","Omistaja1");
         int koodi = dao.lisaa(levy);
+        assertEquals(0, koodi);
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji","Omistaja1");
         koodi = dao.lisaa(levy);
         assertEquals(2, koodi);
-            System.out.println(" koodi "+koodi);
+        
+            //System.out.println(" koodi "+koodi);
     }
     
     @Test
     public void savingInvalidInputUnsuccessfull() throws IOException {
         
-            System.out.println(" virheellinen syöte ");
+            //System.out.println(" virheellinen syöte ");
         
         levy = new Levy("","Nimi1","2021","Tyylilaji","Omistaja1");
         int koodi = dao.lisaa(levy);
         assertEquals(3, koodi);
-            System.out.println(" koodi "+koodi);
+        
+            //System.out.println(" koodi "+koodi);
     }
-    */
     
     @Test
     public void fetchAll() throws IOException {
         
-            System.out.println(" haeKaikki ");
+            //System.out.println(" haeKaikki ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
         int koodi = dao.lisaa(levy);
+        assertEquals(0, koodi);
+            //System.out.println(" koodi1 "+koodi);
+            
         levy = new Levy("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
         koodi = dao.lisaa(levy);
+        assertEquals(0, koodi);
+            //System.out.println(" koodi2 "+koodi);
+            
         levy = new Levy("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
         koodi = dao.lisaa(levy);
+        assertEquals(0, koodi);
+            //System.out.println(" koodi3 "+koodi);
+            
         levy = new Levy("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja1");
         koodi = dao.lisaa(levy);
+        assertEquals(0, koodi);
+            //System.out.println(" koodi4 "+koodi);
 
         ArrayList levyt = new ArrayList();
         levyt = dao.hae("","");
@@ -112,7 +135,7 @@ public class KatalogiDaoTest {
     @Test
     public void fetchEsittaja() throws IOException {
         
-            System.out.println(" haeEsittaja ");
+            //System.out.println(" haeEsittaja ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
         int koodi = dao.lisaa(levy);
@@ -132,7 +155,7 @@ public class KatalogiDaoTest {
     @Test
     public void fetchNimi() throws IOException {
         
-            System.out.println(" haeNimi ");
+            //System.out.println(" haeNimi ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
         int koodi = dao.lisaa(levy);
@@ -152,7 +175,7 @@ public class KatalogiDaoTest {
     @Test
     public void fetchVuosi() throws IOException {
         
-            System.out.println(" haeVuosi ");
+            //System.out.println(" haeVuosi ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
         int koodi = dao.lisaa(levy);
@@ -172,7 +195,7 @@ public class KatalogiDaoTest {
     @Test
     public void fetchTyylilaji() throws IOException {
         
-            System.out.println(" haeTyylilaji ");
+            //System.out.println(" haeTyylilaji ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
         int koodi = dao.lisaa(levy);
@@ -192,7 +215,7 @@ public class KatalogiDaoTest {
     @Test
     public void fetchOmistaja() throws IOException {
         
-            System.out.println(" haeOmistaja ");
+            //System.out.println(" haeOmistaja ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
         int koodi = dao.lisaa(levy);
