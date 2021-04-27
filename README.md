@@ -20,6 +20,16 @@ Projektikansio ladataan koneelle ja sijoitetaan haluttuun hakemistoon. Musakatal
 mvn compile exec:java -Dexec.mainClass=katalogi.Main
 ```
 
+### Suoritettava jar-paketti
+
+Komento
+
+```
+mvn package
+```
+generoi target-hakemistoon ajettavan _Musakatalogi-1.0-SNAPSHOT.jar_ -paketin
+
+
 ### Testaus
 
 Testit suoritetaan komennolla
