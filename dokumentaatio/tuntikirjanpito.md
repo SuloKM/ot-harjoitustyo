@@ -12,4 +12,7 @@
 | 17.4. | 4    | Sovelluslogiikkaa |
 | 19.4. | 6    | Käyttöliittymää |
 | 20.4. | 6    | Koodin parantelua, dokumentaatiota |
-| yht   | 41   |
+| 25.4. | 4    | Käyttöliittymää |
+| 26.4. | 6    | Koodin parantelua, sovelluslogiikkaa |
+| 27.4. | 4    | Koodin parantelua, dokumentaatiota |
+| yht   | 55   |
