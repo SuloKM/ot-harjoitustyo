@@ -7,7 +7,7 @@ Sovelluksella on alkuvaiheessa vain yksi (perustason) käyttäjärooli. Sovellus
 ### Levyjen hallinta (alkunäyttö)
 * käyttäjä voi syöttää järjestelmään uuden levyn tiedot [x]
 * käyttäjä voi hakea levyjen tietoja tietyillä kriteereillä [x]
-* käyttäjä voi tutkia aiemmin tallennetun levykokoelman tilastoja []
+* käyttäjä voi tutkia aiemmin tallennetun levykokoelman tilastoja [x]
 * muista näkymistä pääsee palaamaan takaisin alkunäytölle [x]
 ### Uuden levyn rekisteröinti
 * levystä tallennetaan Esittäjä, Nimi, Vuosi, Tyylilaji (Genre) ja Omistaja [x]
@@ -18,7 +18,7 @@ Sovelluksella on alkuvaiheessa vain yksi (perustason) käyttäjärooli. Sovellus
 * kunkin rivin kohdalla on erillinen valintaruutu jolla kyseisen levyn voi merkitä poistettavaksi []
 * oikeanpuoleinen sarakeotsikko toimii poistopainikkeena, jonka aktivoinnin myötä poistettavaksi merkityt levyt poistetaan listalta []
 ### Tilastointi
-* tilastonäkymä esittää levykokoelman numeroina []
+* tilastonäkymä esittää levykokoelman numeroina [x]
 ## Jatkokehitysideoita
 * navigointi sujuvammaksi
 * käyttäjän tunnistus alkuun
