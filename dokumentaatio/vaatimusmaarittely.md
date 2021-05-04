@@ -15,8 +15,7 @@ Sovelluksella on alkuvaiheessa vain yksi (perustason) käyttäjärooli. Sovellus
 ### Levyjen haku
 * levyjen tietoja voi hakea valitulla kriteerillä eli levyn attribuutilla [x]
 * levyt listataan ja levyjen attribuutit näytetään omissa sarakkeissaan [x]
-* kunkin rivin kohdalla on erillinen valintaruutu jolla kyseisen levyn voi merkitä poistettavaksi []
-* oikeanpuoleinen sarakeotsikko toimii poistopainikkeena, jonka aktivoinnin myötä poistettavaksi merkityt levyt poistetaan listalta []
+* kunkin rivin kohdalla on erillinen valintaruutu jolla kyseisen levyn voi poistaa [x]
 ### Tilastointi
 * tilastonäkymä esittää levykokoelman numeroina [x]
 ## Jatkokehitysideoita
