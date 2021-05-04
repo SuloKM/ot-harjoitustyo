@@ -15,4 +15,6 @@
 | 25.4. | 4    | Käyttöliittymää |
 | 26.4. | 6    | Koodin parantelua, sovelluslogiikkaa |
 | 27.4. | 4    | Koodin parantelua, dokumentaatiota |
-| yht   | 55   |
+|  3.5. | 4    | Koodin parantelua, dokumentaatiota |
+|  4.5. | 8    | Refaktorointia, koodin parantelua, dokumentaatiota |
+| yht   | 67   |
