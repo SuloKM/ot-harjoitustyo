@@ -20,6 +20,8 @@ Aloitusnäkymästä siirrytään "Uusi levy" -painikkeella näkymään, jossa sy
 levyn tunnistetiedot niille varattuihin kenttiin. Lisää-painikkeella vaaditut ja virheettömät syötteet 
 saadaan tallennettua.
 
+<img src="https://raw.githubusercontent.com/SuloKM/ot-harjoitustyo/master/dokumentaatio/kuvat/uusilevy.png" width="400">
+
 Jos syötteissä on virheitä/puutteita, näkymään tulee virheilmoitus.
 
 Myös tietojen onnistunut tallennus kuitataan ilmoituksella.
