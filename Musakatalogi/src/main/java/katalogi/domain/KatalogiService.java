@@ -16,15 +16,21 @@ public class KatalogiService {
     
     private List<Levy> levyt;
     private KatalogiDao dao;
+    private String tiedostonNimi = "levyt.txt";
     
-    public KatalogiService() {
+    public KatalogiService(String tiedosto) {
         
             //System.out.println(" KatalogiService 1 "+levyt);
         
         levyt = new ArrayList();
         
+        if (tiedosto.equals("")) {
+            tiedosto = tiedostonNimi;
+        }
+        
         try {
-            dao = new KatalogiDao("levyt.txt");
+            //dao = new KatalogiDao("levyt.txt");
+            dao = new KatalogiDao(tiedosto);
             
             levyt = dao.haeTiedostosta();
             

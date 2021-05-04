@@ -27,7 +27,7 @@ public class KatalogiServiceTest {
     @Before
     public void setUp() throws Exception {
         
-            System.out.println(" setUp.. ");
+            //System.out.println(" setUp.. ");
         
         file = testFolder.newFile("testi_levyt.txt");
         
@@ -43,25 +43,15 @@ public class KatalogiServiceTest {
         // file.write("1;siivoa;false;testertester\n");
         // service = new KatalogiDao("testi_levyt.txt");
         //service = new KatalogiDao(file.getAbsolutePath());
-        service = new KatalogiService();
+        service = new KatalogiService(file.getPath());
         
-            System.out.println(" ..setUp ");
-    }
-    
-    @Test
-    public void showStatistics() throws IOException {
-        
-            System.out.println(" showStatistics ");
-        
-        HashMap map = service.tilastoi();
-            //System.out.println(" map.size "+map.size());
-        assertEquals(5, map.size());
+            //System.out.println(" ..setUp ");
     }
 
     @Test
     public void savingRecordSuccessfull() throws IOException {
         
-            System.out.println(" savingRecordSuccessfull ");
+          //System.out.println(" savingRecordSuccessfull ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji","Omistaja1");
         int koodi = service.lisaa(levy);
@@ -73,7 +63,7 @@ public class KatalogiServiceTest {
     @Test
     public void savingSameRecordUnsuccessfull() throws IOException {
         
-            System.out.println(" savingSameRecordUnsuccessfull ");
+          //System.out.println(" savingSameRecordUnsuccessfull ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji","Omistaja1");
         int koodi = service.lisaa(levy);
@@ -88,7 +78,7 @@ public class KatalogiServiceTest {
     @Test
     public void savingInvalidInputUnsuccessfull() throws IOException {
         
-            System.out.println(" savingInvalidInputUnsuccessfull ");
+          //System.out.println(" savingInvalidInputUnsuccessfull ");
         
         levy = new Levy("","Nimi1","2021","Tyylilaji","Omistaja1");
         int koodi = service.lisaa(levy);
@@ -100,7 +90,7 @@ public class KatalogiServiceTest {
     @Test
     public void fetchAll() throws IOException {
         
-            System.out.println(" fetchAll ");
+          //System.out.println(" fetchAll ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
         int koodi = service.lisaa(levy);
@@ -131,7 +121,7 @@ public class KatalogiServiceTest {
     @Test
     public void fetchEsittaja() throws IOException {
         
-            System.out.println(" fetchEsittaja ");
+          //System.out.println(" fetchEsittaja ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
         int koodi = service.lisaa(levy);
@@ -151,7 +141,7 @@ public class KatalogiServiceTest {
     @Test
     public void fetchNimi() throws IOException {
         
-            System.out.println(" fetchNimi ");
+          //System.out.println(" fetchNimi ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
         int koodi = service.lisaa(levy);
@@ -171,7 +161,7 @@ public class KatalogiServiceTest {
     @Test
     public void fetchVuosi() throws IOException {
         
-            System.out.println(" fetchVuosi ");
+            //System.out.println(" fetchVuosi ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
         int koodi = service.lisaa(levy);
@@ -191,7 +181,7 @@ public class KatalogiServiceTest {
     @Test
     public void fetchTyylilaji() throws IOException {
         
-            System.out.println(" fetchTyylilaji ");
+            //System.out.println(" fetchTyylilaji ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
         int koodi = service.lisaa(levy);
@@ -211,7 +201,7 @@ public class KatalogiServiceTest {
     @Test
     public void fetchOmistaja() throws IOException {
         
-            System.out.println(" fetchOmistaja ");
+            //System.out.println(" fetchOmistaja ");
 
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
         int koodi = service.lisaa(levy);
@@ -226,6 +216,16 @@ public class KatalogiServiceTest {
         haetut = service.hae("Omistaja","Omistaja1");
         
         assertEquals(3, haetut.size());
+    }
+    
+    @Test
+    public void showStatistics() throws IOException {
+        
+            //System.out.println(" showStatistics ");
+        
+        HashMap map = service.tilastoi();
+            //System.out.println(" map.size "+map.size());
+        assertEquals(5, map.size());
     }
     
     @After

@@ -36,21 +36,16 @@ public class KatalogiUi extends Application {
     private Scene uusiScene;
     private Scene hakuScene;
     private Scene tilastoScene;
-    //private KatalogiDao dao;
     private KatalogiService service;
     private ArrayList<Levy> levyt;
     private HashMap tilasto;
-    //private ArrayList tulosrivit;
-    //private VBox tulosrivit;
     private VBox vboxHaku;
-    //private Button btPoista;
     GridPane tulosrivit;
     
     @Override
     public void start(Stage stage) throws Exception {
 
-        //dao = new KatalogiDao("levyt.txt");
-        service = new KatalogiService();
+        service = new KatalogiService("");
         
         BorderPane bpAlku   = new BorderPane();
 
@@ -75,7 +70,7 @@ public class KatalogiUi extends Application {
         hakukriteeri.getItems().addAll("","Esittaja", "Nimi", "Vuosi", "Tyylilaji", "Omistaja");
         TextField tfKriteeri    = new TextField("");
         Button btHae            = new Button("Hae");
-        //GridPane tulosrivit           = new VBox();
+
         tulosrivit     = new GridPane();
         
         hboxHaku.getChildren().add(hakukriteeri);
@@ -105,11 +100,6 @@ public class KatalogiUi extends Application {
         vbox2.getChildren().add(ilmo);
         vbox.getChildren().add(btAlkuun);
         vbox.getChildren().add(new Label(""));
-        //HBox hboxHaku2 = new HBox();
-        //hboxHaku2.getChildren().add(btLisays);
-        //hboxHaku2.getChildren().add(new Label("       "));
-        //hboxHaku2.getChildren().add(btAlkuun);
-        //vbox2.getChildren().add(hboxHaku2);
         vbox2.getChildren().add(btLisays);
 
         
@@ -162,18 +152,6 @@ public class KatalogiUi extends Application {
             vboxTilasto.getChildren().add(new Label(""));
             vboxTilasto.getChildren().add(tilastonRivit);
             
-            
-            /*
-            vboxTilasto.getChildren().clear();
-            vboxTilasto.getChildren().add(btAlkuun3);
-            vboxTilasto.getChildren().add(new Label(""));
-            vboxTilasto.getChildren().add(new Label("Esittäjiä      " + tilasto.get("Esittäjiä")));
-            vboxTilasto.getChildren().add(new Label("Nimiä          " + tilasto.get("Nimiä")));
-            vboxTilasto.getChildren().add(new Label("Vuosia         " + tilasto.get("Vuosia")));
-            vboxTilasto.getChildren().add(new Label("Tyylilajeja    " + tilasto.get("Tyylilajeja")));
-            vboxTilasto.getChildren().add(new Label("Omistajia      " + tilasto.get("Omistajia")));
-            */
-            
         });
         
         btAlkuun.setOnAction(e->{
@@ -215,8 +193,7 @@ public class KatalogiUi extends Application {
             levy.setVuosi(tfVuosi.getText());
             levy.setTyylilaji(tfTyylilaji.getText());
             levy.setOmistaja(tfOmistaja.getText());
-            
-            //boolean ok = dao.lisaa(levy);
+
             int ok = 0;
 
             try {
@@ -244,7 +221,6 @@ public class KatalogiUi extends Application {
         
 
 
-        //bpAlku.setTop(new Label("Levyjen hallinta"));
         bpAlku.setTop(vboxAlku);
         
         bpAlku.setCenter(hboxAlku);
@@ -293,20 +269,18 @@ public class KatalogiUi extends Application {
             
         }
         
-        tulosrivit.add(new Label("Esittäjä"), 0, 0);
-        tulosrivit.add(new Label("Nimi"), 1, 0);
-        tulosrivit.add(new Label("Vuosi"), 2, 0);
-        tulosrivit.add(new Label("Tyylilaji"), 3, 0);
-        tulosrivit.add(new Label("Omistaja"), 4, 0);
+        if (levyt.size() > 0) {
+            tulosrivit.add(new Label("Esittäjä"), 0, 0);
+            tulosrivit.add(new Label("Nimi"), 1, 0);
+            tulosrivit.add(new Label("Vuosi"), 2, 0);
+            tulosrivit.add(new Label("Tyylilaji"), 3, 0);
+            tulosrivit.add(new Label("Omistaja"), 4, 0);
+        }
         
         for (int i=0; i<levyt.size(); i++) {
 
             Levy levy = (Levy)levyt.get(i);
-            //tulosrivi   =   new HBox(5);
-            //tulosrivi   =   new GridPane();
             
-            //box.setPadding(new Insets(0,5,0,5));
-            //btPoista = new Button("Poista");
             cbPoista = new CheckBox("Poista");
 
             tulosrivit.add(new Label(levy.getEsittaja()), 0, i+1);
@@ -332,24 +306,8 @@ public class KatalogiUi extends Application {
             
             cbPoista.setOnAction(e->{
                 
-                    //System.out.println("cbPoista ");
-
-                    //System.out.println(" "+levy);
-                
                 levyt = service.poista(levy);
-                
-                    //System.out.println("1 "+levyt);
-                
-                /*
-                try {
-                    boolean ok = service.tallennaTiedostoon();
-                } catch (IOException ex) {
-                    Logger.getLogger(KatalogiUi.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                */
-                
-                    //System.out.println("2 "+levyt);
-                
+
                 luoLevylista();
 
             });

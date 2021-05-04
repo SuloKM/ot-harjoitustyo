@@ -83,24 +83,26 @@ public class KatalogiDao {
         boolean ok = true;
         
         try {
-
-            if (writer == null) {
-                writer = new FileWriter(tiedosto);
-            }
+            
+            writer = new FileWriter(tiedosto);
 
             for (int i = 0; i < levyt.size(); i++) {
 
                 Levy levy = levyt.get(i);
 
-                rivi = levy.getEsittaja() + ";" + levy.getNimi()
+                rivi = rivi + levy.getEsittaja() + ";" + levy.getNimi()
                         + ";" + levy.getVuosi() + ";" + levy.getTyylilaji() + ";" + levy.getOmistaja();
-
+                
                 writer.write(rivi + "\n");
             }
+
+            writer.close();
+            
         } catch (IOException ex) {
+            ok = false;
             Logger.getLogger(KatalogiDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return ok;
     }
 }
