@@ -23,6 +23,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import katalogi.dao.KatalogiDao;
+import katalogi.domain.KatalogiService;
 import katalogi.domain.Levy;
 
 
@@ -35,7 +36,8 @@ public class KatalogiUi extends Application {
     private Scene uusiScene;
     private Scene hakuScene;
     private Scene tilastoScene;
-    private KatalogiDao dao;
+    //private KatalogiDao dao;
+    private KatalogiService service;
     private ArrayList<Levy> levyt;
     private HashMap tilasto;
     //private ArrayList tulosrivit;
@@ -47,7 +49,8 @@ public class KatalogiUi extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        dao = new KatalogiDao("levyt.txt");
+        //dao = new KatalogiDao("levyt.txt");
+        service = new KatalogiService();
         
         BorderPane bpAlku   = new BorderPane();
 
@@ -136,11 +139,11 @@ public class KatalogiUi extends Application {
         });
         
         button3.setOnAction(e->{
-            tilasto = dao.tilastoi();
+            tilasto = service.tilastoi();
             stage.setScene(tilastoScene);
-            
+
             GridPane tilastonRivit = new GridPane();
-            
+
             tilastonRivit.add(new Label("Esittäjiä"), 0, 0);
             tilastonRivit.add(new Label("" + tilasto.get("Esittäjiä")), 1, 0);
             tilastonRivit.add(new Label("Nimiä"), 0, 1);
@@ -153,7 +156,6 @@ public class KatalogiUi extends Application {
             tilastonRivit.add(new Label("" + tilasto.get("Omistajia")), 1, 4);
             
             tilastonRivit.getColumnConstraints().add(new ColumnConstraints(100));
-            
             
             vboxTilasto.getChildren().clear();
             vboxTilasto.getChildren().add(btAlkuun3);
@@ -196,10 +198,10 @@ public class KatalogiUi extends Application {
             
             if (hakukriteeri.getValue() == null) {
                 
-                levyt = dao.hae("", "");
+                levyt = service.hae("", "");
             } else {
 
-                levyt = dao.hae((String)hakukriteeri.getValue(), tfKriteeri.getText());
+                levyt = service.hae((String)hakukriteeri.getValue(), tfKriteeri.getText());
             }
             
             luoLevylista();
@@ -218,7 +220,7 @@ public class KatalogiUi extends Application {
             int ok = 0;
 
             try {
-                ok = dao.lisaa(levy);
+                ok = service.lisaa(levy);
             } catch (IOException ex) {
                 Logger.getLogger(KatalogiUi.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -263,6 +265,20 @@ public class KatalogiUi extends Application {
         //GridPane tulosrivi;
         CheckBox cbPoista;
         
+        /*
+        GridPane sarakeOtsikot = new GridPane();
+        
+        sarakeOtsikot.getColumnConstraints().add(new ColumnConstraints(100));
+        
+        sarakeOtsikot.add(new Label("Esittäjä"), 0, 0);
+        sarakeOtsikot.add(new Label("Nimi"), 1, 0);
+        sarakeOtsikot.add(new Label("Vuosi"), 2, 0);
+        sarakeOtsikot.add(new Label("Tyylilaji"), 3, 0);
+        sarakeOtsikot.add(new Label("Omistaja"), 4, 0);
+        
+        vboxHaku.getChildren().add(sarakeOtsikot);
+        */
+        
         if (vboxHaku.getChildren().contains(tulosrivit)) {
             
             int ind = vboxHaku.getChildren().indexOf(tulosrivit);
@@ -277,6 +293,11 @@ public class KatalogiUi extends Application {
             
         }
         
+        tulosrivit.add(new Label("Esittäjä"), 0, 0);
+        tulosrivit.add(new Label("Nimi"), 1, 0);
+        tulosrivit.add(new Label("Vuosi"), 2, 0);
+        tulosrivit.add(new Label("Tyylilaji"), 3, 0);
+        tulosrivit.add(new Label("Omistaja"), 4, 0);
         
         for (int i=0; i<levyt.size(); i++) {
 
@@ -287,13 +308,24 @@ public class KatalogiUi extends Application {
             //box.setPadding(new Insets(0,5,0,5));
             //btPoista = new Button("Poista");
             cbPoista = new CheckBox("Poista");
+
+            tulosrivit.add(new Label(levy.getEsittaja()), 0, i+1);
+            tulosrivit.add(new Label(levy.getNimi()), 1, i+1);
+            tulosrivit.add(new Label(levy.getVuosi()), 2, i+1);
+            tulosrivit.add(new Label(levy.getTyylilaji()), 3, i+1);
+            tulosrivit.add(new Label(levy.getOmistaja()), 4, i+1);
+            tulosrivit.add(cbPoista, 5, i+1);
             
+            tulosrivit.getColumnConstraints().add(new ColumnConstraints(70));
+            
+            /*
             tulosrivit.add(new Label(levy.getEsittaja()+"   "), 0, i);
             tulosrivit.add(new Label(levy.getNimi()+"   "), 1, i);
             tulosrivit.add(new Label(levy.getVuosi()+"   "), 2, i);
             tulosrivit.add(new Label(levy.getTyylilaji()+"   "), 3, i);
             tulosrivit.add(new Label(levy.getOmistaja()+"   "), 4, i);
             tulosrivit.add(cbPoista, 5, i);
+            */
 
             String id = cbPoista.getId();
             boolean valittu = cbPoista.isSelected();
@@ -304,15 +336,17 @@ public class KatalogiUi extends Application {
 
                     //System.out.println(" "+levy);
                 
-                levyt = dao.poista(levy);
+                levyt = service.poista(levy);
                 
                     //System.out.println("1 "+levyt);
                 
+                /*
                 try {
-                    boolean ok = dao.tallennaTiedostoon();
+                    boolean ok = service.tallennaTiedostoon();
                 } catch (IOException ex) {
                     Logger.getLogger(KatalogiUi.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                */
                 
                     //System.out.println("2 "+levyt);
                 

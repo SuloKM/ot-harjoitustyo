@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package katalogi.dao;
+package katalogi.domain;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import katalogi.domain.KatalogiService;
 import katalogi.domain.Levy;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
@@ -18,23 +14,20 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
-/**
- *
- * @author aleksikoivisto
- */
-public class KatalogiDaoTest {
+public class KatalogiServiceTest {
     
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
 
     File file;
     Levy levy;
-    KatalogiDao dao;
+    //KatalogiDao service;
+    KatalogiService service;
     
     @Before
     public void setUp() throws Exception {
         
-            //System.out.println(" setUp.. ");
+            System.out.println(" setUp.. ");
         
         file = testFolder.newFile("testi_levyt.txt");
         
@@ -48,16 +41,19 @@ public class KatalogiDaoTest {
         }
 
         // file.write("1;siivoa;false;testertester\n");
-        // dao = new KatalogiDao("testi_levyt.txt");
-        dao = new KatalogiDao(file.getAbsolutePath());
+        // service = new KatalogiDao("testi_levyt.txt");
+        //service = new KatalogiDao(file.getAbsolutePath());
+        service = new KatalogiService();
         
-            //System.out.println(" ..setUp ");
+            System.out.println(" ..setUp ");
     }
     
     @Test
     public void showStatistics() throws IOException {
         
-        HashMap map = dao.tilastoi();
+            System.out.println(" showStatistics ");
+        
+        HashMap map = service.tilastoi();
             //System.out.println(" map.size "+map.size());
         assertEquals(5, map.size());
     }
@@ -65,10 +61,10 @@ public class KatalogiDaoTest {
     @Test
     public void savingRecordSuccessfull() throws IOException {
         
-            //System.out.println(" levynTallennus ");
+            System.out.println(" savingRecordSuccessfull ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji","Omistaja1");
-        int koodi = dao.lisaa(levy);
+        int koodi = service.lisaa(levy);
         assertEquals(0, koodi);
         
             //System.out.println(" koodi "+koodi);
@@ -77,13 +73,13 @@ public class KatalogiDaoTest {
     @Test
     public void savingSameRecordUnsuccessfull() throws IOException {
         
-            //System.out.println(" samanLevynTallennus ");
+            System.out.println(" savingSameRecordUnsuccessfull ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji","Omistaja1");
-        int koodi = dao.lisaa(levy);
+        int koodi = service.lisaa(levy);
         assertEquals(0, koodi);
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji","Omistaja1");
-        koodi = dao.lisaa(levy);
+        koodi = service.lisaa(levy);
         assertEquals(2, koodi);
         
             //System.out.println(" koodi "+koodi);
@@ -92,10 +88,10 @@ public class KatalogiDaoTest {
     @Test
     public void savingInvalidInputUnsuccessfull() throws IOException {
         
-            //System.out.println(" virheellinen syöte ");
+            System.out.println(" savingInvalidInputUnsuccessfull ");
         
         levy = new Levy("","Nimi1","2021","Tyylilaji","Omistaja1");
-        int koodi = dao.lisaa(levy);
+        int koodi = service.lisaa(levy);
         assertEquals(3, koodi);
         
             //System.out.println(" koodi "+koodi);
@@ -104,132 +100,132 @@ public class KatalogiDaoTest {
     @Test
     public void fetchAll() throws IOException {
         
-            //System.out.println(" haeKaikki ");
+            System.out.println(" fetchAll ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
-        int koodi = dao.lisaa(levy);
+        int koodi = service.lisaa(levy);
         assertEquals(0, koodi);
             //System.out.println(" koodi1 "+koodi);
             
         levy = new Levy("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
-        koodi = dao.lisaa(levy);
+        koodi = service.lisaa(levy);
         assertEquals(0, koodi);
             //System.out.println(" koodi2 "+koodi);
             
         levy = new Levy("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
-        koodi = dao.lisaa(levy);
+        koodi = service.lisaa(levy);
         assertEquals(0, koodi);
             //System.out.println(" koodi3 "+koodi);
             
         levy = new Levy("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja1");
-        koodi = dao.lisaa(levy);
+        koodi = service.lisaa(levy);
         assertEquals(0, koodi);
             //System.out.println(" koodi4 "+koodi);
 
-        ArrayList levyt = new ArrayList();
-        levyt = dao.hae("","");
+        ArrayList haetut = new ArrayList();
+        haetut = service.hae("","");
         
-        assertEquals(4, levyt.size());
+        assertEquals(4, haetut.size());
     }
     
     @Test
     public void fetchEsittaja() throws IOException {
         
-            //System.out.println(" haeEsittaja ");
+            System.out.println(" fetchEsittaja ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
-        int koodi = dao.lisaa(levy);
+        int koodi = service.lisaa(levy);
         levy = new Levy("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
-        koodi = dao.lisaa(levy);
+        koodi = service.lisaa(levy);
         levy = new Levy("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
-        koodi = dao.lisaa(levy);
+        koodi = service.lisaa(levy);
         levy = new Levy("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja1");
-        koodi = dao.lisaa(levy);
+        koodi = service.lisaa(levy);
 
-        ArrayList levyt = new ArrayList();
-        levyt = dao.hae("Esittaja","Esittaja1");
+        ArrayList haetut = new ArrayList();
+        haetut = service.hae("Esittaja","Esittaja1");
         
-        assertEquals(2, levyt.size());
+        assertEquals(2, haetut.size());
     }
     
     @Test
     public void fetchNimi() throws IOException {
         
-            //System.out.println(" haeNimi ");
+            System.out.println(" fetchNimi ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
-        int koodi = dao.lisaa(levy);
+        int koodi = service.lisaa(levy);
         levy = new Levy("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
-        koodi = dao.lisaa(levy);
+        koodi = service.lisaa(levy);
         levy = new Levy("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
-        koodi = dao.lisaa(levy);
+        koodi = service.lisaa(levy);
         levy = new Levy("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja1");
-        koodi = dao.lisaa(levy);
+        koodi = service.lisaa(levy);
 
-        ArrayList levyt = new ArrayList();
-        levyt = dao.hae("Nimi","Nimi1");
+        ArrayList haetut = new ArrayList();
+        haetut = service.hae("Nimi","Nimi1");
         
-        assertEquals(1, levyt.size());
+        assertEquals(1, haetut.size());
     }
     
     @Test
     public void fetchVuosi() throws IOException {
         
-            //System.out.println(" haeVuosi ");
+            System.out.println(" fetchVuosi ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
-        int koodi = dao.lisaa(levy);
+        int koodi = service.lisaa(levy);
         levy = new Levy("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
-        koodi = dao.lisaa(levy);
+        koodi = service.lisaa(levy);
         levy = new Levy("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
-        koodi = dao.lisaa(levy);
+        koodi = service.lisaa(levy);
         levy = new Levy("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja1");
-        koodi = dao.lisaa(levy);
+        koodi = service.lisaa(levy);
 
-        ArrayList levyt = new ArrayList();
-        levyt = dao.hae("Vuosi","2021");
+        ArrayList haetut = new ArrayList();
+        haetut = service.hae("Vuosi","2021");
         
-        assertEquals(4, levyt.size());
+        assertEquals(4, haetut.size());
     }
     
     @Test
     public void fetchTyylilaji() throws IOException {
         
-            //System.out.println(" haeTyylilaji ");
+            System.out.println(" fetchTyylilaji ");
         
         levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
-        int koodi = dao.lisaa(levy);
+        int koodi = service.lisaa(levy);
         levy = new Levy("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
-        koodi = dao.lisaa(levy);
+        koodi = service.lisaa(levy);
         levy = new Levy("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
-        koodi = dao.lisaa(levy);
+        koodi = service.lisaa(levy);
         levy = new Levy("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja1");
-        koodi = dao.lisaa(levy);
+        koodi = service.lisaa(levy);
 
-        ArrayList levyt = new ArrayList();
-        levyt = dao.hae("Tyylilaji","Tyylilaji2");
+        ArrayList haetut = new ArrayList();
+        haetut = service.hae("Tyylilaji","Tyylilaji2");
         
-        assertEquals(2, levyt.size());
+        assertEquals(2, haetut.size());
     }
     
     @Test
     public void fetchOmistaja() throws IOException {
         
-            //System.out.println(" haeOmistaja ");
-        
-        levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
-        int koodi = dao.lisaa(levy);
-        levy = new Levy("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
-        koodi = dao.lisaa(levy);
-        levy = new Levy("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
-        koodi = dao.lisaa(levy);
-        levy = new Levy("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja2");
-        koodi = dao.lisaa(levy);
+            System.out.println(" fetchOmistaja ");
 
-        ArrayList levyt = new ArrayList();
-        levyt = dao.hae("Omistaja","Omistaja1");
+        levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
+        int koodi = service.lisaa(levy);
+        levy = new Levy("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
+        koodi = service.lisaa(levy);
+        levy = new Levy("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
+        koodi = service.lisaa(levy);
+        levy = new Levy("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja2");
+        koodi = service.lisaa(levy);
+
+        ArrayList haetut = new ArrayList();
+        haetut = service.hae("Omistaja","Omistaja1");
         
-        assertEquals(3, levyt.size());
+        assertEquals(3, haetut.size());
     }
     
     @After
