@@ -6,6 +6,8 @@ Sovelluksella on tarkoitus pystyä ylläpitämään henkilökohtaista musiikkiko
 
 [vaatimusmaarittely.md](https://github.com/SuloKM/ot-harjoitustyo/tree/master/dokumentaatio/vaatimusmaarittely.md)
 
+[kayttoohje.md](https://github.com/SuloKM/ot-harjoitustyo/tree/master/dokumentaatio/kayttoohje.md)
+
 [tuntikirjanpito.md](https://github.com/SuloKM/ot-harjoitustyo/tree/master/dokumentaatio/tuntikirjanpito.md)
 
 [arkkitehtuuri.md](https://github.com/SuloKM/ot-harjoitustyo/tree/master/dokumentaatio/arkkitehtuuri.md)
