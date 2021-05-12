@@ -10,16 +10,16 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import katalogi.domain.Levy;
+import katalogi.domain.Album;
 
 /**
  * Pysyväistallennusta edustava luokka.
  */
 public class KatalogiDao {
     
-    public List<Levy> levyt;
-    private String tiedostonNimi;
-    private File tiedosto;
+    public List<Album> albums;
+    private String fileName;
+    private File file;
     private FileWriter writer;
     private Scanner reader;
     
@@ -28,22 +28,23 @@ public class KatalogiDao {
     * on jo olemassa, lukee siihen kirjatut levyt.
     * Jos valmista tiedostoa ei löydy, alustaa uuden.
     */
-    public KatalogiDao(String file) throws Exception {
+    public KatalogiDao(String paramFileName) throws Exception {
 
-        this.tiedostonNimi = file;
+        this.fileName = paramFileName;
 
-        tiedosto = new File(tiedostonNimi);
+        file = new File(fileName);
 
-        levyt = new ArrayList<>();
+        albums = new ArrayList<>();
         
         try {
             
-            reader = new Scanner(tiedosto);
+            reader = new Scanner(file);
             
             //boolean poistettu = tiedosto.delete();
             //    System.out.println(" tiedosto poistettu "+poistettu);
+            
         } catch (Exception e) {
-            writer = new FileWriter(tiedosto);
+            writer = new FileWriter(file);
             writer.close();
         }
     }
@@ -51,49 +52,54 @@ public class KatalogiDao {
     /**
     * Hakee sovelluksen käynnistysvaiheessa tiedoston sisällön.
     */
-    public List haeTiedostosta() {
+    public List getFromFile() {
         
             //System.out.println(" haeTiedostosta "+levyt);
 
         try {
-            reader = new Scanner(tiedosto);
+            reader = new Scanner(file);
 
             while (reader.hasNextLine()) {
 
                 String[] parts = reader.nextLine().split(";");
 
-                Levy levy = new Levy(parts[0], parts[1], parts[2], parts[3], parts[4]);
+                Album levy = new Album(parts[0], parts[1], parts[2], parts[3], parts[4]);
 
-                levyt.add(levy);
+                albums.add(levy);
             }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(KatalogiDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return levyt;
+        return albums;
     }
     
     /**
     * Tallentaa aiemmin määritettyyn tiedostoon sovelluksen muistissa olevan 
     * levykokoelman.
     */
-    public boolean tallennaTiedostoon() {
+    public boolean saveToFile() {
 
-        String rivi = "";
+            //System.out.println(" saveToFile ");
+        
+        String row = "";
         boolean ok = true;
+        
+            //System.out.println(" albums toString " + albums.toString());
+            //System.out.println(" albums.size() " + albums.size());
         
         try {
             
-            writer = new FileWriter(tiedosto);
+            writer = new FileWriter(file);
 
-            for (int i = 0; i < levyt.size(); i++) {
+            for (int i = 0; i < albums.size(); i++) {
 
-                Levy levy = levyt.get(i);
+                Album album = albums.get(i);
 
-                rivi = rivi + levy.getEsittaja() + ";" + levy.getNimi()
-                        + ";" + levy.getVuosi() + ";" + levy.getTyylilaji() + ";" + levy.getOmistaja();
+                row = row + album.getArtist() + ";" + album.getName()
+                        + ";" + album.getYear() + ";" + album.getGenre() + ";" + album.getOwner();
                 
-                writer.write(rivi + "\n");
+                writer.write(row + "\n");
             }
 
             writer.close();
@@ -103,6 +109,13 @@ public class KatalogiDao {
             Logger.getLogger(KatalogiDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        return ok;
+    }
+    
+    public boolean saveToFile(List<Album> albums) {
+        
+        this.albums = albums;
+        boolean ok = this.saveToFile();
         return ok;
     }
 }

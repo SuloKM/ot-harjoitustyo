@@ -14,123 +14,123 @@ import katalogi.dao.KatalogiDao;
  */
 public class KatalogiService {
     
-    private List<Levy> levyt;
+    private List<Album> albums;
     private KatalogiDao dao;
-    private String tiedostonNimi = "levyt.txt";
+    private String fileName = "albums.txt";
     
-    public KatalogiService(String tiedosto) {
+    public KatalogiService(String paramFileName) {
         
-            //System.out.println(" KatalogiService 1 "+levyt);
+            //System.out.println(" KatalogiService 1 "+albums);
         
-        levyt = new ArrayList();
+        albums = new ArrayList();
         
-        if (tiedosto.equals("")) {
-            tiedosto = tiedostonNimi;
+        if (paramFileName.equals("")) {
+            paramFileName = fileName;
         }
         
         try {
-            //dao = new KatalogiDao("levyt.txt");
-            dao = new KatalogiDao(tiedosto);
+            //dao = new KatalogiDao("albums.txt");
+            dao = new KatalogiDao(paramFileName);
             
-            levyt = dao.haeTiedostosta();
+            albums = dao.getFromFile();
             
         } catch (Exception ex) {
             Logger.getLogger(KatalogiService.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-            //System.out.println(" KatalogiService 2 "+levyt);
+            //System.out.println(" KatalogiService 2 "+albums);
     }
     
     /**
     * Laskee sovelluksen muistissa olevasta levykokoelmasta Tilasto-näkymän
     * tarvitsemat tunnusluvut.
     */
-    public HashMap tilastoi() {
+    public HashMap getStatistics() {
         
             //System.out.println(" tilastoi ");
-        HashMap tilasto = new HashMap();
+        HashMap stat = new HashMap();
         
-        //levyt.stream()
+        //albums.stream()
         
-        ArrayList attribuutti = new ArrayList();
+        ArrayList attributes = new ArrayList();
         
-        for (int i = 0; i < levyt.size(); i++) {
+        for (int i = 0; i < albums.size(); i++) {
             
-                //System.out.println(" getEsittaja "+levyt.get(i).getEsittaja());
-            attribuutti.add(levyt.get(i).getEsittaja());
+                //System.out.println(" getEsittaja "+albums.get(i).getEsittaja());
+            attributes.add(albums.get(i).getArtist());
         }
         
             //System.out.println(" distinct "+attribuutti.stream().distinct().count());
         
-        tilasto.put("Esittäjiä", "" + attribuutti.stream().distinct().count());
-        attribuutti.clear();
+        stat.put("Esittäjiä", "" + attributes.stream().distinct().count());
+        attributes.clear();
             
-        for (int i = 0; i < levyt.size(); i++) {
+        for (int i = 0; i < albums.size(); i++) {
             
-                //System.out.println(" getNimi "+levyt.get(i).getNimi());
-            attribuutti.add(levyt.get(i).getNimi());
+                //System.out.println(" getNimi "+albums.get(i).getNimi());
+            attributes.add(albums.get(i).getName());
         }
         
             //System.out.println(" distinct "+attribuutti.stream().distinct().count());
             
-        tilasto.put("Nimiä", "" + attribuutti.stream().distinct().count());
-        attribuutti.clear();
+        stat.put("Nimiä", "" + attributes.stream().distinct().count());
+        attributes.clear();
         
-        for (int i = 0; i < levyt.size(); i++) {
+        for (int i = 0; i < albums.size(); i++) {
             
-                //System.out.println(" getVuosi "+levyt.get(i).getVuosi());
-            attribuutti.add(levyt.get(i).getVuosi());
+                //System.out.println(" getVuosi "+albums.get(i).getVuosi());
+            attributes.add(albums.get(i).getYear());
         }
         
             //System.out.println(" distinct "+attribuutti.stream().distinct().count());
         
-        tilasto.put("Vuosia", "" + attribuutti.stream().distinct().count());
-        attribuutti.clear();
+        stat.put("Vuosia", "" + attributes.stream().distinct().count());
+        attributes.clear();
         
-        for (int i = 0; i < levyt.size(); i++) {
+        for (int i = 0; i < albums.size(); i++) {
             
-                //System.out.println(" getTyylilaji "+levyt.get(i).getTyylilaji());
-            attribuutti.add(levyt.get(i).getTyylilaji());
+                //System.out.println(" getTyylilaji "+albums.get(i).getTyylilaji());
+            attributes.add(albums.get(i).getGenre());
         }
         
             //System.out.println(" distinct "+attribuutti.stream().distinct().count());
         
-        tilasto.put("Tyylilajeja", "" + attribuutti.stream().distinct().count());
-        attribuutti.clear();
+        stat.put("Tyylilajeja", "" + attributes.stream().distinct().count());
+        attributes.clear();
         
-        for (int i = 0; i < levyt.size(); i++) {
+        for (int i = 0; i < albums.size(); i++) {
             
-                //System.out.println(" getOmistaja "+levyt.get(i).getOmistaja());
-            attribuutti.add(levyt.get(i).getOmistaja());
+                //System.out.println(" getOmistaja "+albums.get(i).getOmistaja());
+            attributes.add(albums.get(i).getOwner());
         }
         
             //System.out.println(" distinct "+attribuutti.stream().distinct().count());
         
-        tilasto.put("Omistajia", "" + attribuutti.stream().distinct().count());
-        attribuutti.clear();
+        stat.put("Omistajia", "" + attributes.stream().distinct().count());
+        attributes.clear();
         
-        return tilasto;
+        return stat;
     }
     
     /**
     * Poistaa levykokoelmasta parametrina annetun levyn.
     * @param poistettava määrittää poistettavan levyn
-    * @return jäljellä olevat levyt
+    * @return jäljellä olevat albums
     */
-    public ArrayList<Levy> poista(Levy poistettava) {
+    public ArrayList<Album> remove(Album param) {
 
-        for (int i = 0; i < levyt.size(); i++) {
+        for (int i = 0; i < albums.size(); i++) {
 
-            if (levyt.get(i).onkoSama(poistettava)) {
+            if (albums.get(i).sameOrDifferent(param)) {
                 
-                levyt.remove(i);
+                albums.remove(i);
                 break;
             }
         }
         
-        dao.tallennaTiedostoon();
+        dao.saveToFile();
         
-        return (ArrayList) levyt;
+        return (ArrayList) albums;
     }
     
     /**
@@ -138,79 +138,79 @@ public class KatalogiService {
     * attribuutteja.
     * @param param1 määrittää haetun attribuutin ("Esittaja")
     * @param param2 määrittää haetun attribuutin arvon ("Esittaja1")
-    * @return hakuparametreja vastaavat levyt
+    * @return hakuparametreja vastaavat albums
     */
-    public ArrayList<Levy> hae(String param1, String param2) {
+    public ArrayList<Album> get(String param1, String param2) {
 
         if (param1.equals("")) {
 
-            return (ArrayList) levyt;
+            return (ArrayList) albums;
 
         } else {
             
-            ArrayList<Levy> haetut = new ArrayList<Levy>();
+            ArrayList<Album> result = new ArrayList<Album>();
             
-            for (int i = 0; i < levyt.size(); i++) {
+            for (int i = 0; i < albums.size(); i++) {
                 
                 if (param1.equals("Esittaja")) {
                     
-                    if (levyt.get(i).getEsittaja().equals(param2)) {
-                        haetut.add(levyt.get(i));
+                    if (albums.get(i).getArtist().equals(param2)) {
+                        result.add(albums.get(i));
                     }
                     
                 } else if (param1.equals("Nimi")) {
                     
-                    if (levyt.get(i).getNimi().equals(param2)) {
-                        haetut.add(levyt.get(i));
+                    if (albums.get(i).getName().equals(param2)) {
+                        result.add(albums.get(i));
                     }
                 } else if (param1.equals("Vuosi")) {
                     
-                    if (levyt.get(i).getVuosi().equals(param2)) {
-                        haetut.add(levyt.get(i));
+                    if (albums.get(i).getYear().equals(param2)) {
+                        result.add(albums.get(i));
                     }
                 } else if (param1.equals("Tyylilaji")) {
                     
-                    if (levyt.get(i).getTyylilaji().equals(param2)) {
-                        haetut.add(levyt.get(i));
+                    if (albums.get(i).getGenre().equals(param2)) {
+                        result.add(albums.get(i));
                     }   
                 } else if (param1.equals("Omistaja")) {
 
-                    if (levyt.get(i).getOmistaja().equals(param2)) {
-                        haetut.add(levyt.get(i));
+                    if (albums.get(i).getOwner().equals(param2)) {
+                        result.add(albums.get(i));
                     }
                 }
             }
             
-            return haetut;
+            return result;
         }
     }
     
     /**
     * Lisää parametrina annetun levyn sovelluksen muistissa olevaan
-    * levykokoelmaan ja kutsuu tiedostoon tallentavaa metodia.
+    * levykokoelmaan ja kutsuu paramFileNameon tallentavaa metodia.
     */
-    public int lisaa(Levy levy) throws IOException {
+    public int add(Album levy) throws IOException {
 
-        int koodi = 0;
+        int code = 0;
 
-        koodi = tarkistaLevy(levy);
+        code = checkAlbum(levy);
 
-        if (koodi < 2) {
+        if (code < 2) {
             
-            levyt.add(levy);
+            albums.add(levy);
             
-            boolean ok = dao.tallennaTiedostoon();
+            boolean ok = dao.saveToFile();
             
             if (!ok) {
-                koodi = 1;
+                code = 1;
             }
             
-            //writer = new FileWriter(this.tiedosto);
+            //writer = new FileWriter(this.paramFileName);
             
             /*
-            for (int i = 0; i < levyt.size(); i++) {
+            for (int i = 0; i < albums.size(); i++) {
                 
-                levy = levyt.get(i);
+                levy = albums.get(i);
                 String rivi = levy.getEsittaja() + ";" + levy.getNimi()
                     + ";" + levy.getVuosi() + ";" + levy.getTyylilaji() + ";" + levy.getOmistaja();
 
@@ -229,47 +229,47 @@ public class KatalogiService {
             //writer.close();
         }
 
-        return koodi;
+        return code;
     }
     
     /**
     * Tarkistaa levykokoelmaan lisättävän levyn syötetyt attribuutit.
     */
-    private int tarkistaLevy(Levy levy) {
+    private int checkAlbum(Album levy) {
         
             //System.out.println(" -- tarkistaLevy "+levy);
-            //System.out.println(" --- tarkistaLevy "+levyt);
+            //System.out.println(" --- tarkistaLevy "+albums);
         
-        int koodi = 0;
+        int code = 0;
 
-        if (levy.getEsittaja().equals("") | levy.getNimi().equals("") |
-                levy.getVuosi().equals("") | levy.getTyylilaji().equals("") |
-                levy.getOmistaja().equals("")) {
+        if (levy.getArtist().equals("") | levy.getName().equals("") |
+                levy.getYear().equals("") | levy.getGenre().equals("") |
+                levy.getOwner().equals("")) {
             // ilmo.setText("Puutteellinen syöte.");
-            koodi = 3;
+            code = 3;
         } else {
             try {
-                Integer.parseInt(levy.getVuosi());
+                Integer.parseInt(levy.getYear());
             } catch (Exception e2) {
                     
                 //ilmo.setText("Virheellinen syöte.");
-                koodi = 4;
+                code = 4;
             }
         }
         
             //System.out.println(" tarkistaLevy2 ");
             //System.out.println(" koodi "+koodi);
 
-        if (koodi == 0) {
-                //System.out.println(" -levyt "+levyt);
-            for (int i = 0; i < levyt.size(); i++) {
-                Levy vrt = levyt.get(i);
+        if (code == 0) {
+                //System.out.println(" -albums "+albums);
+            for (int i = 0; i < albums.size(); i++) {
+                Album vrt = albums.get(i);
 
                     //System.out.println(" vrt "+vrt);
                     //System.out.println(" levy "+levy);
                 
-                if (vrt.onkoSama(levy)) {
-                    koodi = 2;
+                if (vrt.sameOrDifferent(levy)) {
+                    code = 2;
                 }
                 
                     //System.out.println(" koodi "+koodi);
@@ -278,6 +278,6 @@ public class KatalogiService {
         
             //System.out.println(" koodi- "+koodi);
 
-        return koodi;
+        return code;
     }
 }

@@ -5,8 +5,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import katalogi.domain.KatalogiService;
-import katalogi.domain.Levy;
+import katalogi.domain.Album;
 import org.junit.After;
 import static org.junit.Assert.assertEquals;
 import org.junit.Before;
@@ -20,44 +21,41 @@ public class KatalogiServiceTest {
     public TemporaryFolder testFolder = new TemporaryFolder();
 
     File file;
-    Levy levy;
-    //KatalogiDao service;
+    Album album;
     KatalogiService service;
+    List<Album> albums;
     
     @Before
     public void setUp() throws Exception {
-        
-            //System.out.println(" setUp.. ");
-        
-        file = testFolder.newFile("testi_levyt.txt");
-        
-            //System.out.println(" file.getAbsolutePath "+file.getAbsolutePath());
 
-        try (FileWriter fw = new FileWriter(file.getAbsolutePath())) {
-            fw.write("");
-            //fw.write("Esittaja1;Nimi1;2021;Tyylilaji1;Omistaja1");
-            //fw.append("");
-            //fw.close();
-        }
-
-        // file.write("1;siivoa;false;testertester\n");
-        // service = new KatalogiDao("testi_levyt.txt");
-        //service = new KatalogiDao(file.getAbsolutePath());
-        service = new KatalogiService(file.getPath());
-        
-            //System.out.println(" ..setUp ");
+        file = testFolder.newFile("album.txt");
+        service = new KatalogiService(file.toString());
     }
 
+    @Test
+    public void removingAlbumSuccessfull() throws IOException {
+        
+            //System.out.println(" removingAlbumSuccessfull ");
+        album = new Album("Esittaja1","Nimi1","2021","Tyylilaji","Omistaja1");
+        int code = service.add(album);
+        albums = service.get("", "");
+        assertEquals(1, albums.size());
+            //System.out.println(" albums size " + albums.size());
+        album = new Album("Esittaja1","Nimi1","2021","Tyylilaji","Omistaja1");
+        albums = service.remove(album);
+        assertEquals(0, albums.size());
+    }
+    
     @Test
     public void savingRecordSuccessfull() throws IOException {
         
           //System.out.println(" savingRecordSuccessfull ");
         
-        levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji","Omistaja1");
-        int koodi = service.lisaa(levy);
-        assertEquals(0, koodi);
+        album = new Album("Esittaja1","Nimi1","2021","Tyylilaji","Omistaja1");
+        int code = service.add(album);
+        assertEquals(0, code);
         
-            //System.out.println(" koodi "+koodi);
+            //System.out.println(" code "+code);
     }
     
     @Test
@@ -65,14 +63,14 @@ public class KatalogiServiceTest {
         
           //System.out.println(" savingSameRecordUnsuccessfull ");
         
-        levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji","Omistaja1");
-        int koodi = service.lisaa(levy);
-        assertEquals(0, koodi);
-        levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji","Omistaja1");
-        koodi = service.lisaa(levy);
-        assertEquals(2, koodi);
+        album = new Album("Esittaja1","Nimi1","2021","Tyylilaji","Omistaja1");
+        int code = service.add(album);
+        assertEquals(0, code);
+        album = new Album("Esittaja1","Nimi1","2021","Tyylilaji","Omistaja1");
+        code = service.add(album);
+        assertEquals(2, code);
         
-            //System.out.println(" koodi "+koodi);
+            //System.out.println(" code "+code);
     }
     
     @Test
@@ -80,11 +78,11 @@ public class KatalogiServiceTest {
         
           //System.out.println(" savingInvalidInputUnsuccessfull ");
         
-        levy = new Levy("","Nimi1","2021","Tyylilaji","Omistaja1");
-        int koodi = service.lisaa(levy);
-        assertEquals(3, koodi);
+        album = new Album("","Nimi1","2021","Tyylilaji","Omistaja1");
+        int code = service.add(album);
+        assertEquals(3, code);
         
-            //System.out.println(" koodi "+koodi);
+            //System.out.println(" code "+code);
     }
     
     @Test
@@ -92,128 +90,128 @@ public class KatalogiServiceTest {
         
           //System.out.println(" fetchAll ");
         
-        levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
-        int koodi = service.lisaa(levy);
-        assertEquals(0, koodi);
-            //System.out.println(" koodi1 "+koodi);
+        album = new Album("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
+        int code = service.add(album);
+        assertEquals(0, code);
+            //System.out.println(" code1 "+code);
             
-        levy = new Levy("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
-        koodi = service.lisaa(levy);
-        assertEquals(0, koodi);
-            //System.out.println(" koodi2 "+koodi);
+        album = new Album("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
+        code = service.add(album);
+        assertEquals(0, code);
+            //System.out.println(" code2 "+code);
             
-        levy = new Levy("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
-        koodi = service.lisaa(levy);
-        assertEquals(0, koodi);
-            //System.out.println(" koodi3 "+koodi);
+        album = new Album("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
+        code = service.add(album);
+        assertEquals(0, code);
+            //System.out.println(" code3 "+code);
             
-        levy = new Levy("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja1");
-        koodi = service.lisaa(levy);
-        assertEquals(0, koodi);
-            //System.out.println(" koodi4 "+koodi);
+        album = new Album("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja1");
+        code = service.add(album);
+        assertEquals(0, code);
+            //System.out.println(" code4 "+code);
 
-        ArrayList haetut = new ArrayList();
-        haetut = service.hae("","");
+        ArrayList result = new ArrayList();
+        result = service.get("","");
         
-        assertEquals(4, haetut.size());
+        assertEquals(4, result.size());
     }
     
     @Test
-    public void fetchEsittaja() throws IOException {
+    public void fetchArtist() throws IOException {
         
           //System.out.println(" fetchEsittaja ");
         
-        levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
-        int koodi = service.lisaa(levy);
-        levy = new Levy("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
-        koodi = service.lisaa(levy);
-        levy = new Levy("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
-        koodi = service.lisaa(levy);
-        levy = new Levy("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja1");
-        koodi = service.lisaa(levy);
+        album = new Album("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
+        int code = service.add(album);
+        album = new Album("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
+        code = service.add(album);
+        album = new Album("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
+        code = service.add(album);
+        album = new Album("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja1");
+        code = service.add(album);
 
         ArrayList haetut = new ArrayList();
-        haetut = service.hae("Esittaja","Esittaja1");
+        haetut = service.get("Esittaja","Esittaja1");
         
         assertEquals(2, haetut.size());
     }
     
     @Test
-    public void fetchNimi() throws IOException {
+    public void fetchName() throws IOException {
         
           //System.out.println(" fetchNimi ");
         
-        levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
-        int koodi = service.lisaa(levy);
-        levy = new Levy("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
-        koodi = service.lisaa(levy);
-        levy = new Levy("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
-        koodi = service.lisaa(levy);
-        levy = new Levy("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja1");
-        koodi = service.lisaa(levy);
+        album = new Album("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
+        int code = service.add(album);
+        album = new Album("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
+        code = service.add(album);
+        album = new Album("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
+        code = service.add(album);
+        album = new Album("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja1");
+        code = service.add(album);
 
         ArrayList haetut = new ArrayList();
-        haetut = service.hae("Nimi","Nimi1");
+        haetut = service.get("Nimi","Nimi1");
         
         assertEquals(1, haetut.size());
     }
     
     @Test
-    public void fetchVuosi() throws IOException {
+    public void fetchYear() throws IOException {
         
             //System.out.println(" fetchVuosi ");
         
-        levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
-        int koodi = service.lisaa(levy);
-        levy = new Levy("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
-        koodi = service.lisaa(levy);
-        levy = new Levy("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
-        koodi = service.lisaa(levy);
-        levy = new Levy("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja1");
-        koodi = service.lisaa(levy);
+        album = new Album("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
+        int code = service.add(album);
+        album = new Album("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
+        code = service.add(album);
+        album = new Album("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
+        code = service.add(album);
+        album = new Album("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja1");
+        code = service.add(album);
 
         ArrayList haetut = new ArrayList();
-        haetut = service.hae("Vuosi","2021");
+        haetut = service.get("Vuosi","2021");
         
         assertEquals(4, haetut.size());
     }
     
     @Test
-    public void fetchTyylilaji() throws IOException {
+    public void fetchGenre() throws IOException {
         
             //System.out.println(" fetchTyylilaji ");
         
-        levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
-        int koodi = service.lisaa(levy);
-        levy = new Levy("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
-        koodi = service.lisaa(levy);
-        levy = new Levy("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
-        koodi = service.lisaa(levy);
-        levy = new Levy("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja1");
-        koodi = service.lisaa(levy);
+        album = new Album("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
+        int code = service.add(album);
+        album = new Album("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
+        code = service.add(album);
+        album = new Album("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
+        code = service.add(album);
+        album = new Album("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja1");
+        code = service.add(album);
 
         ArrayList haetut = new ArrayList();
-        haetut = service.hae("Tyylilaji","Tyylilaji2");
+        haetut = service.get("Tyylilaji","Tyylilaji2");
         
         assertEquals(2, haetut.size());
     }
     
     @Test
-    public void fetchOmistaja() throws IOException {
+    public void fetchOwner() throws IOException {
         
             //System.out.println(" fetchOmistaja ");
 
-        levy = new Levy("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
-        int koodi = service.lisaa(levy);
-        levy = new Levy("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
-        koodi = service.lisaa(levy);
-        levy = new Levy("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
-        koodi = service.lisaa(levy);
-        levy = new Levy("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja2");
-        koodi = service.lisaa(levy);
+        album = new Album("Esittaja1","Nimi1","2021","Tyylilaji1","Omistaja1");
+        int code = service.add(album);
+        album = new Album("Esittaja2","Nimi2","2021","Tyylilaji2","Omistaja1");
+        code = service.add(album);
+        album = new Album("Esittaja1","Nimi3","2021","Tyylilaji1","Omistaja1");
+        code = service.add(album);
+        album = new Album("Esittaja2","Nimi4","2021","Tyylilaji2","Omistaja2");
+        code = service.add(album);
 
         ArrayList haetut = new ArrayList();
-        haetut = service.hae("Omistaja","Omistaja1");
+        haetut = service.get("Omistaja","Omistaja1");
         
         assertEquals(3, haetut.size());
     }
@@ -222,8 +220,12 @@ public class KatalogiServiceTest {
     public void showStatistics() throws IOException {
         
             //System.out.println(" showStatistics ");
-        
-        HashMap map = service.tilastoi();
+        for (int i = 0; i < 5; i ++ ) {
+            album = new Album("Esittaja" + i,"Nimi" + i,"2021","Tyylilaji","Omistaja1");
+            int code = service.add(album);
+        }
+ 
+        HashMap map = service.getStatistics();
             //System.out.println(" map.size "+map.size());
         assertEquals(5, map.size());
     }
