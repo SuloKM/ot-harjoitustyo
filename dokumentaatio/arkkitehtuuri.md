@@ -40,4 +40,14 @@ Attribuutit siis erotellaan puolipistein.
 
 Levyn lisäys sekvenssikaaviona
 
-<img src="https://raw.githubusercontent.com/SuloKM/ot-harjoitustyo/master/dokumentaatio/kuvat/sekvenssi.png" width="300">
+<img src="https://raw.githubusercontent.com/SuloKM/ot-harjoitustyo/master/dokumentaatio/kuvat/sekvenssi_uusilevy.png" width="300">
+
+Levyjen haku sekvenssikaaviona
+
+<img src="https://raw.githubusercontent.com/SuloKM/ot-harjoitustyo/master/dokumentaatio/kuvat/sekvenssi_haku.png" width="300">
+
+Levykokoelman tilasto sekvenssikaaviona
+
+<img src="https://raw.githubusercontent.com/SuloKM/ot-harjoitustyo/master/dokumentaatio/kuvat/sekvenssi_tilasto.png" width="300">
+
+
