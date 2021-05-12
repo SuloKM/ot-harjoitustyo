@@ -27,3 +27,17 @@ Jos syötteissä on virheitä/puutteita, näkymään tulee virheilmoitus.
 Myös tietojen onnistunut tallennus kuitataan ilmoituksella.
 
 Alkuun-painikkeella päästään takaisin alkunäkymään.
+
+## Haku
+
+Aloitusnäkymästä siirrytään "Haku" -painikkeella näkymään, jossa voidaan määrittää haettavien levyjen hakuehdon. Vasemmalla välittömästi "Hakukriteeri" -otsikon alapuolella on alasvetovalikko, josta valitaan haluttu levyattribuutti. Valikon oikealla puolella olevaan tekstikenttään syötetään attribuutin arvo. "Hae" -panikkeella käynnistetään varsinainen hakutoiminto. Hakutulokset listataan näkymään allekkain alkaen keskiosasta.
+
+<img src="https://raw.githubusercontent.com/SuloKM/ot-harjoitustyo/master/dokumentaatio/kuvat/hakunakyma.png" width="400">
+
+<img src="https://raw.githubusercontent.com/SuloKM/ot-harjoitustyo/master/dokumentaatio/kuvat/hakunakyma2.png" width="400">
+
+Jos hakukriteerit jätetään tyhjiksi, haetaan kaikki tallennetut levyt.
+
+<img src="https://raw.githubusercontent.com/SuloKM/ot-harjoitustyo/master/dokumentaatio/kuvat/hakutulokset.png" width="400">
+
+Hakutuloksissa mukana olevia levyjä voidaan poistaa kokoelmasta klikkaamalla tuosrivin oikealla laidalla olevaa "Poista" -ruutua.
