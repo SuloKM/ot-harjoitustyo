@@ -41,3 +41,9 @@ Jos hakukriteerit jätetään tyhjiksi, haetaan kaikki tallennetut levyt.
 <img src="https://raw.githubusercontent.com/SuloKM/ot-harjoitustyo/master/dokumentaatio/kuvat/hakutulokset.png" width="400">
 
 Hakutuloksissa mukana olevia levyjä voidaan poistaa kokoelmasta klikkaamalla tuosrivin oikealla laidalla olevaa "Poista" -ruutua.
+
+## Tilasto
+
+Aloitusnäkymästä siirrytään "Tilasto" -painikkeella näkymään, jossa levykokoelman sisältö esitellään lukuina.
+
+<img src="https://raw.githubusercontent.com/SuloKM/ot-harjoitustyo/master/dokumentaatio/kuvat/tilastonakyma.png" width="400">
