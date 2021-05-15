@@ -14,19 +14,21 @@ Pakkaus _katalogi.ui_ sisältää JavaFX:llä toteutetun käyttöliittymän, _ka
 
 ## Käyttöliittymä
 
-KatalogiUi vastaa käyttöliittymästä, joka muodostuu neljästä, yksi kerrallaan näkyvästä näkymästä: alku, lisäys, haku ja tilasto. Jokaisella näkymällä on oma Scene-olio.
+_KatalogiUi_ (_katalogi.ui_) vastaa käyttöliittymästä, joka muodostuu neljästä, yksi kerrallaan näkyvästä näkymästä: alku, lisäys, haku ja tilasto. Jokaisella näkymällä on oma Scene-olio.
 
 Sovellus pyrkii noudattamaan käyttöliittymän ja sovelluslogiikan toisistaan eriyttämisen periaatetta.
 
 ## Sovelluslogiikka
 
-KatalogiUi-olio käynnistää varsinaisesta sovelluslogiikasta vastaavan KatalogiService-olion. Levy-olio kuvaa yhtä järjestelmään syötettävää musiikkialbumia.
+KatalogiUi-olio käynnistää varsinaisesta sovelluslogiikasta vastaavan _KatalogiService_-olion (_katalogi.domain_). Levy-olio kuvaa yhtä järjestelmään syötettävää musiikkialbumia.
 
 ## Tietojen pysyväistallennus
 
-KatalogiService käynnistää puolestaan pysyväistallennuksesta vastaavan KatalogiDao-olion, joka tallettaa tietokantaan.
+KatalogiService käynnistää puolestaan pysyväistallennuksesta vastaavan _KatalogiDBDao_-olion (_katalogi.dao_), joka tallettaa tietokantaan.
 
-## Tietokantaa
+KatalogiDBDao noudattaa Data Access Object -suunnittelumallia ja on eristetty sovelluslogiikasta _KatalogiDao_-rajapinnan (_katalogi.domain_) taakse. Tämä mahdollistaa verrattain vaivattoman tallennustyyppivaihdoksen tarvittaessa.
+
+## Tietokanta
 
 Albums.db, joka sijaitsee sovelluksen juuressa. Käyttää SQLite-ajuria.
 
@@ -48,5 +50,3 @@ Levyjen haku sekvenssikaaviona
 Levykokoelman tilasto sekvenssikaaviona
 
 <img src="https://raw.githubusercontent.com/SuloKM/ot-harjoitustyo/master/dokumentaatio/kuvat/sekvenssi_tilasto.png" width="300">
-
-
