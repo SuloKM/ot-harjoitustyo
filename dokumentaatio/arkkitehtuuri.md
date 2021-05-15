@@ -14,7 +14,7 @@ Pakkaus _katalogi.ui_ sisältää JavaFX:llä toteutetun käyttöliittymän, _ka
 
 ## Käyttöliittymä
 
-KatalogiUi vastaa käyttöliittymästä. Käyttöliittymä muodostuu neljästä, yksi kerrallaan näkyvästä näkymästä: alku, lisäys, haku ja tilasto. Jokaisella näkymällä on oma Scene-olio.
+KatalogiUi vastaa käyttöliittymästä, joka muodostuu neljästä, yksi kerrallaan näkyvästä näkymästä: alku, lisäys, haku ja tilasto. Jokaisella näkymällä on oma Scene-olio.
 
 Sovellus pyrkii noudattamaan käyttöliittymän ja sovelluslogiikan toisistaan eriyttämisen periaatetta.
 
@@ -24,17 +24,16 @@ KatalogiUi-olio käynnistää varsinaisesta sovelluslogiikasta vastaavan Katalog
 
 ## Tietojen pysyväistallennus
 
-KatalogiService käynnistää puolestaan pysyväistallennuksesta vastaavan KatalogiDao-olion, joka toistaiseksi tallettaa tekstitiedostoon.
+KatalogiService käynnistää puolestaan pysyväistallennuksesta vastaavan KatalogiDao-olion, joka tallettaa tietokantaan.
 
-## Tiedostot
+## Tietokantaa
 
-Levyt.txt, sijaitsee sovelluksen juuressa.
+Albums.db, joka sijaitsee sovelluksen juuressa. Käyttää SQLite-ajuria.
 
-Albumit talletetaan muodossa
+Albumit talletetaan tauluun Albums, joka luodaan SQL-lauseella
 ```
-Esittaja;Nimi;Vuosi;Tyylilaji;Omistaja
+CREATE TABLE Albums (id INTEGER PRIMARY KEY, artist TEXT, name TEXT, year TEXT, genre TEXT, owner TEXT)
 ```
-Attribuutit siis erotellaan puolipistein.
 
 ## Päätoiminnallisuudet
 
