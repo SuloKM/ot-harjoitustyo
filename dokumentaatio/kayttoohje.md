@@ -1,5 +1,7 @@
 # Käyttöohje
 
+## _! HUOM ! Sovelluksen kehitysvaiheessa esiintyi Cubbli-ympäristössä ajonaikaisia ongelmia SQLite-tietokantayhteydessä tietyissä hakemistoissa ajettaessa._
+
 Lataa tiedosto [Musakatalogi-1.0-SNAPSHOT.jar](https://github.com/SuloKM/ot-harjoitustyo/releases/tag/viikko5)
 
 ## Ohjelman käynnistäminen
