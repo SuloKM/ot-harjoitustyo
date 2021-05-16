@@ -22,6 +22,8 @@ Sovelluksella on tarkoitus pystyä ylläpitämään henkilökohtaista musiikkiko
 
 ### Ohjelman käyttöönotto
 
+### _! HUOM ! Sovelluksen kehitysvaiheessa esiintyi Cubbli-ympäristössä ajonaikaisia ongelmia SQLite-tietokantayhteydessä tietyissä hakemistoissa ajettaessa._
+
 Projektikansio ladataan koneelle ja sijoitetaan haluttuun hakemistoon. Musakatalogi-hakemistossa (sisältää pom.xml-tiedoston) suoritetaan komento
 
 ```
