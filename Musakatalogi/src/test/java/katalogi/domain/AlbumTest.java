@@ -17,9 +17,6 @@ import static org.junit.Assert.*;
  * @author aleksikoivisto
  */
 public class AlbumTest {
-    
-    public AlbumTest() {
-    }
 
     @Test
     public void equalWhenSameArtist() {

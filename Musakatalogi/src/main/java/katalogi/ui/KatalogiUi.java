@@ -1,14 +1,11 @@
 package katalogi.ui;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -22,9 +19,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import katalogi.dao.KatalogiDao;
-import katalogi.domain.KatalogiService;
 import katalogi.domain.Album;
+import katalogi.domain.KatalogiService;
 
 
 /**
@@ -37,7 +33,6 @@ public class KatalogiUi extends Application {
     private Scene queryScene;
     private Scene statScene;
     private KatalogiService service;
-    private ArrayList<Album> albums;
     private HashMap stats;
     private VBox vboxQuery;
     GridPane resultSet;
@@ -45,15 +40,15 @@ public class KatalogiUi extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        service = new KatalogiService("");
+        service = new KatalogiService();
         
         BorderPane bpStart   = new BorderPane();
 
-        VBox vboxStart          = new VBox();
-        HBox hboxStart          = new HBox(3);
-        Button button1          = new Button("Uusi levy");
-        Button button2          = new Button("Haku");
-        Button button3          = new Button("Tilasto");
+        VBox vboxStart              = new VBox();
+        HBox hboxStart              = new HBox(3);
+        Button btUusi               = new Button("Uusi levy");
+        Button btHaku               = new Button("Haku");
+        Button btTilasto            = new Button("Tilasto");
         vboxStart.getChildren().add(new Label(""));
         vboxStart.getChildren().add(new Label("Levyjen hallinta"));
         vboxStart.getChildren().add(new Label(""));
@@ -103,11 +98,11 @@ public class KatalogiUi extends Application {
         vbox2.getChildren().add(btAdd);
 
         
-        TextField tfArtist      = new TextField(""); //TextField tfArtist    = new TextField("Esittaja1");
-        TextField tfName        = new TextField(""); //TextField tfName        = new TextField("Nimi1");
-        TextField tfYear        = new TextField(""); //TextField tfYear       = new TextField("2021");
-        TextField tfGenre       = new TextField(""); //TextField tfGenre   = new TextField("Tyylilaji");
-        TextField tfOwner       = new TextField(""); //TextField tfOwner    = new TextField("Omistaja");
+        TextField tfArtist      = new TextField("");
+        TextField tfName        = new TextField("");
+        TextField tfYear        = new TextField("");
+        TextField tfGenre       = new TextField("");
+        TextField tfOwner       = new TextField("");
         
         vbox.getChildren().add(new Label("Esittäjä"));
         vbox.getChildren().add(tfArtist);
@@ -120,15 +115,15 @@ public class KatalogiUi extends Application {
         vbox.getChildren().add(new Label("Omistaja"));
         vbox.getChildren().add(tfOwner);
         
-        button1.setOnAction(e->{
+        btUusi.setOnAction(e->{
             stage.setScene(newScene);
         });
         
-        button2.setOnAction(e->{
+        btHaku.setOnAction(e->{
             stage.setScene(queryScene);
         });
         
-        button3.setOnAction(e->{
+        btTilasto.setOnAction(e->{
             stats = service.getStatistics();
             stage.setScene(statScene);
 
@@ -166,13 +161,9 @@ public class KatalogiUi extends Application {
             stage.setScene(startScene);
         });
         
-        /*
-        cbRemove.setOnAction(e->{
-            System.out.println(" cbRemove ");
-        });
-        */
-        
         btQuery.setOnAction(e->{
+            
+            List<Album> albums;
             
             if (queryParam.getValue() == null) {
                 
@@ -182,34 +173,31 @@ public class KatalogiUi extends Application {
                 albums = service.get((String)queryParam.getValue(), tfParam.getText());
             }
             
-            drawResults();
+            drawResults(albums);
         });
         
         btAdd.setOnAction(e->{
             
-            Album levy = new Album();
-            levy.setArtist(tfArtist.getText());
-            levy.setName(tfName.getText());
-            levy.setYear(tfYear.getText());
-            levy.setGenre(tfGenre.getText());
-            levy.setOwner(tfOwner.getText());
+            Album album = new Album();
+            album.setArtist(tfArtist.getText());
+            album.setName(tfName.getText());
+            album.setYear(tfYear.getText());
+            album.setGenre(tfGenre.getText());
+            album.setOwner(tfOwner.getText());
 
             int ok = 0;
 
             try {
-                ok = service.add(levy);
+                ok = service.add(album);
             } catch (IOException ex) {
                 Logger.getLogger(KatalogiUi.class.getName()).log(Level.SEVERE, null, ex);
             }
             
             if (ok == 0) {
-                    //System.out.println(" dao.lisaa ok ");
                 lbInfo.setText("Levy lisätty.");
             } else if (ok == 1) {
-                    //System.out.println(" dao.lisaa ei ok ");
                 lbInfo.setText("Virhetilanne.");
             } else if (ok == 2) {
-                    //System.out.println(" dao.lisaa ei ok ");
                 lbInfo.setText("Levy jo olemassa.");
             } else if (ok == 3) {
                 lbInfo.setText("Puutteellinen syöte.");
@@ -218,13 +206,11 @@ public class KatalogiUi extends Application {
             }
             
         });
-        
-
 
         bpStart.setTop(vboxStart);
         
         bpStart.setCenter(hboxStart);
-        hboxStart.getChildren().addAll(button1, button2, button3);
+        hboxStart.getChildren().addAll(btUusi, btHaku, btTilasto);
         
         startScene = new Scene(bpStart, 240, 180);
         newScene = new Scene(bpNew, 240, 340);
@@ -233,113 +219,56 @@ public class KatalogiUi extends Application {
 
         stage.setScene(startScene);
         stage.show();
-        
     }
 
-    //private void luoLevylista() {
-    private void drawResults() {
+    private void drawResults(List<Album> albums) {
 
-        //GridPane tulosrivi;
         CheckBox cbRemove;
-        
-        /*
-        GridPane sarakeOtsikot = new GridPane();
-        
-        sarakeOtsikot.getColumnConstraints().add(new ColumnConstraints(100));
-        
-        sarakeOtsikot.add(new Label("Esittäjä"), 0, 0);
-        sarakeOtsikot.add(new Label("Nimi"), 1, 0);
-        sarakeOtsikot.add(new Label("Vuosi"), 2, 0);
-        sarakeOtsikot.add(new Label("Tyylilaji"), 3, 0);
-        sarakeOtsikot.add(new Label("Omistaja"), 4, 0);
-        
-        vboxQuery.getChildren().add(sarakeOtsikot);
-        */
-        
+
         if (vboxQuery.getChildren().contains(resultSet)) {
-            
             int ind = vboxQuery.getChildren().indexOf(resultSet);
-            
             resultSet = new GridPane();
-            
             vboxQuery.getChildren().set(ind, resultSet);
-            
         } else {
-            
             vboxQuery.getChildren().add(resultSet);
-            
         }
-        
-        
-        //if (albums.size() > 0) {
-            
-            resultSet.add(new Label("Esittäjä"), 0, 0);
-            resultSet.getColumnConstraints().add(new ColumnConstraints(100));
-            resultSet.add(new Label("Nimi"), 1, 0);
-            resultSet.getColumnConstraints().add(new ColumnConstraints(100));
-            resultSet.add(new Label("Vuosi"), 2, 0);
-            resultSet.getColumnConstraints().add(new ColumnConstraints(100));
-            resultSet.add(new Label("Tyylilaji"), 3, 0);
-            resultSet.getColumnConstraints().add(new ColumnConstraints(100));
-            resultSet.add(new Label("Omistaja"), 4, 0);
-            resultSet.getColumnConstraints().add(new ColumnConstraints(100));
-            
-            //resultSet.getColumnConstraints().toString()
-                //System.out.println(" resultSet ColumnConstraints " + resultSet.getColumnConstraints().toString());
-                //System.out.println(" resultSet Hgap " + resultSet.getHgap());
-                
-            //resultSet.setGridLinesVisible(true);
-        //}
+
+        resultSet.add(new Label("Esittäjä"), 0, 0);
+        resultSet.getColumnConstraints().add(new ColumnConstraints(100));
+        resultSet.add(new Label("Nimi"), 1, 0);
+        resultSet.getColumnConstraints().add(new ColumnConstraints(100));
+        resultSet.add(new Label("Vuosi"), 2, 0);
+        resultSet.getColumnConstraints().add(new ColumnConstraints(100));
+        resultSet.add(new Label("Tyylilaji"), 3, 0);
+        resultSet.getColumnConstraints().add(new ColumnConstraints(100));
+        resultSet.add(new Label("Omistaja"), 4, 0);
+        resultSet.getColumnConstraints().add(new ColumnConstraints(100));
         
         for (int i=0; i<albums.size(); i++) {
 
-            Album levy = (Album)albums.get(i);
+            Album album = albums.get(i);
             
             cbRemove = new CheckBox("Poista");
 
-            resultSet.add(new Label(levy.getArtist()), 0, i+1);
-            resultSet.add(new Label(levy.getName()), 1, i+1);
-            resultSet.add(new Label(levy.getYear()), 2, i+1);
-            resultSet.add(new Label(levy.getGenre()), 3, i+1);
-            resultSet.add(new Label(levy.getOwner()), 4, i+1);
+            resultSet.add(new Label(album.getArtist()), 0, i+1);
+            resultSet.add(new Label(album.getName()), 1, i+1);
+            resultSet.add(new Label(album.getYear()), 2, i+1);
+            resultSet.add(new Label(album.getGenre()), 3, i+1);
+            resultSet.add(new Label(album.getOwner()), 4, i+1);
             resultSet.add(cbRemove, 5, i+1);
-            
-            /*
-            resultSet.add(new Label(levy.getEsittaja()+"   "), 0, i);
-            resultSet.add(new Label(levy.getNimi()+"   "), 1, i);
-            resultSet.add(new Label(levy.getVuosi()+"   "), 2, i);
-            resultSet.add(new Label(levy.getTyylilaji()+"   "), 3, i);
-            resultSet.add(new Label(levy.getOmistaja()+"   "), 4, i);
-            resultSet.add(cbRemove, 5, i);
-            */
 
             String id = cbRemove.getId();
             boolean valittu = cbRemove.isSelected();
             
             cbRemove.setOnAction(e->{
-                
-                albums = service.remove(levy);
+                List<Album> albumList = service.remove(album);
 
-                drawResults();
-
+                drawResults(albums);
             });
-            
-            //resultSet.getChildren().add(tulosrivi);
-            
-            //tulosrivi.getChildren().add(new Label(levy.getEsittaja()));
-            //tulosrivi.getChildren().add(new Label(levy.getNimi()));
-            //tulosrivi.getChildren().add(new Label(levy.getVuosi()));
-            //tulosrivi.getChildren().add(new Label(levy.getTyylilaji()));
-            //tulosrivi.getChildren().add(new Label(levy.getOmistaja()));
-            //tulosrivi.getChildren().add(btPoista);
-            
-            //tulosrivi.setPadding(new Insets(0,5,0,5));
-            //tulosrivi.setPrefWidth(240);
         }
     }
 
     public static void main(String[] args) {
         launch();
     }
-
 }

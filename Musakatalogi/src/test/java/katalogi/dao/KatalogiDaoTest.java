@@ -7,6 +7,7 @@ package katalogi.dao;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,70 +27,46 @@ import org.junit.rules.TemporaryFolder;
  * @author aleksikoivisto
  */
 public class KatalogiDaoTest {
-    
-    @Rule
-    public TemporaryFolder testFolder = new TemporaryFolder();
-    
-    File file;
+
     Album album;
     List<Album> albums;
-    KatalogiDao dao;
+    DBKatalogiDao dao;
     
     @Before
     public void setUp() {
 
         albums = new ArrayList();
-        
-        /*
-        try {
-            
-        } catch (IOException ex) {
-            Logger.getLogger(KatalogiDaoTest.class.getName()).log(Level.SEVERE, null, ex);
+
+        dao = new DBKatalogiDao();
+
+        for (int i = 0; i < 4; i ++ ) {
+            albums.add(new Album("E" + i,"N" + i,"2021","G1","O1"));
         }
-        */
-        
-        try {
-            file = testFolder.newFile("albums.txt");
-            dao = new KatalogiDao(file.toString());
-        } catch (Exception ex) {
-            Logger.getLogger(KatalogiDaoTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        albums.add(new Album("E2","N1","2021","G1","O1"));
-        dao.saveToFile(albums);
+
+        boolean ok = dao.emptyTable();
     }
     
     @Test
-    public void writeFileSuccesfull() {
+    public void writeDBSuccesfull() {
 
-        albums.add(new Album("E2","N1","2021","G1","O1"));
-        boolean ok = dao.saveToFile(albums);
-        assertEquals(true, ok);
-        
-        /*
-            System.out.println(" writeFileSuccesfull ");
-        albums.add(new Album("E2","N1","2021","G1","O1"));
-        dao.saveToFile(albums);
-        albums = dao.getFromFile();
-            System.out.println(" albums toString " + albums.toString());
-            System.out.println(" albums size " + albums.size());
-        assertEquals(1, albums.size());
-            System.out.println(" ..writeFileSuccesfull ");
-        */
-    }
+        boolean ok = true;
 
-    @Test
-    public void readFileSuccesfull() {
+        ok = dao.saveToDB(albums);
         
-            //System.out.println(" readFileSuccesfull ");
-        albums = dao.getFromFile();
-        assertEquals(2, albums.size());
-            //System.out.println(" albums toString " + albums.toString());
-            //System.out.println(" albums size " + albums.size());
+        assertTrue(ok);
     }
     
-    @After
-    public void tearDown() {
-        file.delete();
+    @Test
+    public void readDBSuccesfull() {
+        
+        boolean ok = true;
+        
+        ok = dao.saveToDB(albums);
+        
+        assertTrue(ok);
+        
+        albums = dao.getFromDB();
+
+        assertEquals(4, albums.size());
     }
 }

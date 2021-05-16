@@ -1,13 +1,10 @@
 package katalogi.domain;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import katalogi.dao.KatalogiDao;
+import katalogi.dao.*;
 
 /**
  * Sovelluslogiikkaa edustava luokka.
@@ -15,97 +12,63 @@ import katalogi.dao.KatalogiDao;
 public class KatalogiService {
     
     private List<Album> albums;
-    private KatalogiDao dao;
-    private String fileName = "albums.txt";
+    private DBKatalogiDao dao;
     
-    public KatalogiService(String paramFileName) {
-        
-            //System.out.println(" KatalogiService 1 "+albums);
-        
+    public KatalogiService() {
         albums = new ArrayList();
-        
-        if (paramFileName.equals("")) {
-            paramFileName = fileName;
-        }
-        
-        try {
-            //dao = new KatalogiDao("albums.txt");
-            dao = new KatalogiDao(paramFileName);
-            
-            albums = dao.getFromFile();
-            
-        } catch (Exception ex) {
-            Logger.getLogger(KatalogiService.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-            //System.out.println(" KatalogiService 2 "+albums);
+        dao = new DBKatalogiDao();
+        albums = dao.getFromDB();
     }
     
     /**
     * Laskee sovelluksen muistissa olevasta levykokoelmasta Tilasto-näkymän
     * tarvitsemat tunnusluvut.
+    * 
+    * @return tilaston luvut HashMap-oliossa
     */
     public HashMap getStatistics() {
-        
-            //System.out.println(" tilastoi ");
+
         HashMap stat = new HashMap();
-        
-        //albums.stream()
-        
+
         ArrayList attributes = new ArrayList();
         
         for (int i = 0; i < albums.size(); i++) {
-            
-                //System.out.println(" getEsittaja "+albums.get(i).getEsittaja());
+
             attributes.add(albums.get(i).getArtist());
         }
-        
-            //System.out.println(" distinct "+attribuutti.stream().distinct().count());
-        
+
         stat.put("Esittäjiä", "" + attributes.stream().distinct().count());
         attributes.clear();
             
         for (int i = 0; i < albums.size(); i++) {
-            
-                //System.out.println(" getNimi "+albums.get(i).getNimi());
+
             attributes.add(albums.get(i).getName());
         }
-        
-            //System.out.println(" distinct "+attribuutti.stream().distinct().count());
-            
+ 
         stat.put("Nimiä", "" + attributes.stream().distinct().count());
         attributes.clear();
         
         for (int i = 0; i < albums.size(); i++) {
-            
-                //System.out.println(" getVuosi "+albums.get(i).getVuosi());
+
             attributes.add(albums.get(i).getYear());
         }
-        
-            //System.out.println(" distinct "+attribuutti.stream().distinct().count());
-        
+
         stat.put("Vuosia", "" + attributes.stream().distinct().count());
         attributes.clear();
         
         for (int i = 0; i < albums.size(); i++) {
-            
-                //System.out.println(" getTyylilaji "+albums.get(i).getTyylilaji());
+
             attributes.add(albums.get(i).getGenre());
         }
-        
-            //System.out.println(" distinct "+attribuutti.stream().distinct().count());
-        
+
         stat.put("Tyylilajeja", "" + attributes.stream().distinct().count());
         attributes.clear();
         
         for (int i = 0; i < albums.size(); i++) {
-            
-                //System.out.println(" getOmistaja "+albums.get(i).getOmistaja());
+
             attributes.add(albums.get(i).getOwner());
         }
-        
-            //System.out.println(" distinct "+attribuutti.stream().distinct().count());
-        
+
         stat.put("Omistajia", "" + attributes.stream().distinct().count());
         attributes.clear();
         
@@ -114,8 +77,9 @@ public class KatalogiService {
     
     /**
     * Poistaa levykokoelmasta parametrina annetun levyn.
+    * 
     * @param poistettava määrittää poistettavan levyn
-    * @return jäljellä olevat albums
+    * @return jäljellä olevat albumit
     */
     public ArrayList<Album> remove(Album param) {
 
@@ -128,20 +92,36 @@ public class KatalogiService {
             }
         }
         
-        dao.saveToFile();
+        dao.saveToDB(albums);
         
         return (ArrayList) albums;
+    }
+    
+        /**
+    * Poistaa levykokoelmasta parametrina annetun levyn.
+    * 
+    * @param poistettava määrittää poistettavan levyn
+    * @return jäljellä olevat albumit
+    */
+    public boolean removeAll() {
+
+        this.albums.clear();
+
+        return dao.emptyTable();
     }
     
     /**
     * Hakee sovelluksen muistissa olevasta levykokoelmasta parametreja vastaavia
     * attribuutteja.
+    * 
     * @param param1 määrittää haetun attribuutin ("Esittaja")
     * @param param2 määrittää haetun attribuutin arvon ("Esittaja1")
-    * @return hakuparametreja vastaavat albums
+    * @return hakuparametreja vastaavat albumit
     */
     public ArrayList<Album> get(String param1, String param2) {
 
+        albums = dao.getFromDB();
+        
         if (param1.equals("")) {
 
             return (ArrayList) albums;
@@ -188,45 +168,28 @@ public class KatalogiService {
     /**
     * Lisää parametrina annetun levyn sovelluksen muistissa olevaan
     * levykokoelmaan ja kutsuu paramFileNameon tallentavaa metodia.
+    * 
+    * @param album lisättävä albumi
+    * @return lisäyksen onnistumisen vahvistava koodi
+    * @throws IOException
     */
-    public int add(Album levy) throws IOException {
+    public int add(Album album) throws IOException {
 
-        int code = 0;
+        //int code = 0;
 
-        code = checkAlbum(levy);
+        int code = checkAlbum(album);
 
         if (code < 2) {
             
-            albums.add(levy);
+            albums.add(album);
             
-            boolean ok = dao.saveToFile();
+            //boolean ok = true;
+            
+            boolean ok = dao.saveToDB(albums);
             
             if (!ok) {
                 code = 1;
             }
-            
-            //writer = new FileWriter(this.paramFileName);
-            
-            /*
-            for (int i = 0; i < albums.size(); i++) {
-                
-                levy = albums.get(i);
-                String rivi = levy.getEsittaja() + ";" + levy.getNimi()
-                    + ";" + levy.getVuosi() + ";" + levy.getTyylilaji() + ";" + levy.getOmistaja();
-
-                try {
-
-                    writer.write(rivi + "\n");
-
-                } catch (IOException ex) {
-
-                    koodi = 1;
-                    Logger.getLogger(KatalogiDao.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            */
-            
-            //writer.close();
         }
 
         return code;
@@ -234,49 +197,34 @@ public class KatalogiService {
     
     /**
     * Tarkistaa levykokoelmaan lisättävän levyn syötetyt attribuutit.
+    * @param album tarkistettava albumi
+    * @return tarkistuksen tuottama tilakoodi
     */
-    private int checkAlbum(Album levy) {
-        
-            //System.out.println(" -- tarkistaLevy "+levy);
-            //System.out.println(" --- tarkistaLevy "+albums);
-        
+    private int checkAlbum(Album album) {
+
         int code = 0;
 
-        if (levy.getArtist().equals("") | levy.getName().equals("") |
-                levy.getYear().equals("") | levy.getGenre().equals("") |
-                levy.getOwner().equals("")) {
-            // ilmo.setText("Puutteellinen syöte.");
+        if (album.getArtist().equals("") | album.getName().equals("") |
+                album.getYear().equals("") | album.getGenre().equals("") |
+                album.getOwner().equals("")) {
             code = 3;
         } else {
             try {
-                Integer.parseInt(levy.getYear());
+                Integer.parseInt(album.getYear());
             } catch (Exception e2) {
-                    
-                //ilmo.setText("Virheellinen syöte.");
                 code = 4;
             }
         }
-        
-            //System.out.println(" tarkistaLevy2 ");
-            //System.out.println(" koodi "+koodi);
 
         if (code == 0) {
-                //System.out.println(" -albums "+albums);
             for (int i = 0; i < albums.size(); i++) {
                 Album vrt = albums.get(i);
 
-                    //System.out.println(" vrt "+vrt);
-                    //System.out.println(" levy "+levy);
-                
-                if (vrt.sameOrDifferent(levy)) {
+                if (vrt.sameOrDifferent(album)) {
                     code = 2;
                 }
-                
-                    //System.out.println(" koodi "+koodi);
             }
         }
-        
-            //System.out.println(" koodi- "+koodi);
 
         return code;
     }
