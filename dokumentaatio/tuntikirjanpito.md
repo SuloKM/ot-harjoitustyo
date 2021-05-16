@@ -17,4 +17,12 @@
 | 27.4. | 4    | Koodin parantelua, dokumentaatiota |
 |  3.5. | 4    | Koodin parantelua, dokumentaatiota |
 |  4.5. | 8    | Refaktorointia, koodin parantelua, dokumentaatiota |
-| yht   | 67   |
+|  9.5. | 5    | Refaktorointia, koodin parantelua, dokumentaatiota |
+| 10.5. | 5    | Refaktorointia, koodin parantelua, dokumentaatiota |
+| 11.5. | 5    | Refaktorointia, koodin parantelua, dokumentaatiota |
+| 12.5. | 5    | Refaktorointia, koodin parantelua, dokumentaatiota |
+| 13.5. | 5    | Refaktorointia, koodin parantelua, dokumentaatiota |
+| 14.5. | 5    | Refaktorointia, koodin parantelua, dokumentaatiota |
+| 15.5. | 5    | Refaktorointia, koodin parantelua, dokumentaatiota |
+| 16.5. | 5    | Refaktorointia, koodin parantelua, dokumentaatiota |
+| yht   | 107  |
