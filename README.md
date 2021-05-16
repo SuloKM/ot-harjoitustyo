@@ -12,6 +12,8 @@ Sovelluksella on tarkoitus pystyä ylläpitämään henkilökohtaista musiikkiko
 
 [arkkitehtuuri.md](https://github.com/SuloKM/ot-harjoitustyo/tree/master/dokumentaatio/arkkitehtuuri.md)
 
+[testaus.md](https://github.com/SuloKM/ot-harjoitustyo/tree/master/dokumentaatio/testaus.md)
+
 ## Releaset
 
 [Viikko 5](https://github.com/SuloKM/ot-harjoitustyo/releases/tag/viikko5)
