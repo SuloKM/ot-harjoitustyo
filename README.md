@@ -18,6 +18,8 @@ Sovelluksella on tarkoitus pystyä ylläpitämään henkilökohtaista musiikkiko
 
 [Viikko 6](https://github.com/SuloKM/ot-harjoitustyo/releases/tag/viikko6)
 
+[Loppupalautus](https://github.com/SuloKM/ot-harjoitustyo/releases/tag/loppupalautus)
+
 ## Komentorivitoiminnot
 
 ### Ohjelman käyttöönotto
